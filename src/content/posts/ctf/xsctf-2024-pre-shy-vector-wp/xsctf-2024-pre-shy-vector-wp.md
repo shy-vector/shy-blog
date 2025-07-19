@@ -1,8 +1,8 @@
 ---
-title: XSCTF2024(pre) shy_vector's wp
+title: XSCTF 2024(pre) shy_vector's wp
 published: 2024-11-03
 updated: 2025-07-19
-description: ''
+description: 'XSCTF2024 部分个人题解'
 image: ''
 tags: [CTF, XSCTF, misc, reverse, crypto, pwn]
 category: 'CTF'

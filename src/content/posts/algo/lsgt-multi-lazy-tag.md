@@ -2,7 +2,7 @@
 title: 线段树 - 多 Tag 下放的优先级问题
 published: 2025-04-16
 updated: 2025-07-19
-description: 'Tag 是线段树实现区间修改的重要技巧，它能够延迟更新子树从而达到降低时间复杂度．在只有一种区间修改类型的情况下，Tag 的 push 处理十分简单．但在多种区间修改类型的情况下，情况就变得不容乐观了：直接根据 Tag 施加的先后顺序来维护 Tag 队列，时间复杂度并不好看．设法将当前节点的 Tag 与子节点的旧 Tag 合并，就成了优化复杂度的关键．其中，不同修改操作之间的影响关系决定了 Tag 被 push 的先后顺序．'
+description: '直接根据 Tag 施加的先后顺序来维护 Tag 队列，时间复杂度并不好看．设法将当前节点的 Tag 与子节点的旧 Tag 合并，就成了优化复杂度的关键．'
 image: ''
 tags: [Algorithm, Data Structure, SGT]
 category: 'Algorithm'
