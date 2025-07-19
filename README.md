@@ -1,8 +1,6 @@
 # About
 shy-blog 基于 [Astro](https://astro.build/)，运用 [Fuwari](https://github.com/saicaca/fuwari) 主题.
 
-::github{repo="saicaca/fuwari"}
-
 > ### Sources of images used in this site
 > - [Unsplash](https://unsplash.com/)
 > - [星と少女](https://www.pixiv.net/artworks/108916539) by [Stella](https://www.pixiv.net/users/93273965)
