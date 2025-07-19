@@ -1,5 +1,5 @@
 # About
-This is the demo site for [Fuwari](https://github.com/saicaca/fuwari).
+shy-blog 基于 [Astro](https://astro.build/)，运用 [Fuwari](https://github.com/saicaca/fuwari) 主题.
 
 ::github{repo="saicaca/fuwari"}
 
