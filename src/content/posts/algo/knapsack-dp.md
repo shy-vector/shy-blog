@@ -9,7 +9,7 @@ category: 'Algorithm'
 draft: false
 ---
 
-## 0-1背包
+## 0-1 背包
 
 ### 问题
 
