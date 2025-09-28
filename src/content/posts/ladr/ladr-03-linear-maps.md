@@ -23,7 +23,7 @@ $$
 $$
 当且仅当
 $$
-\forall\, S \in \mathcal L(V), ST = TS
+\forall\, S \in \mathcal L(V), \: S\,T = TS
 $$
 
 > 必要性 ($\Rightarrow$) 易证，充分性 ($\Leftarrow$) 如下。

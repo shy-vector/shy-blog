@@ -1,5 +1,5 @@
 ---
-title: 替罪羊树 (ScapeGoat-Treap)
+title: 替罪羊树 (ScapeGoat-Tree)
 published: 2025-07-29
 updated: 2025-07-29
 description: '相比有旋 Treap 通过旋转维护平衡，替罪羊树通过暴力重构维护平衡，通过平衡因子的大小决定重构时机，常数相比 FHQ-Treap 较小．'
@@ -83,8 +83,8 @@ $$
 
 template <class T, int N, int ALPHA>
 struct ScapeGoat {
-  int tot = 0, rt, l[N + 1], r[N + 1];
-  T key[N + 1]; int frq[N + 1];
+  int tot = 0, rt = 0, l[N + 1], r[N + 1];
+  T val[N + 1]; int frq[N + 1];
   int siz[N + 1], dsiz[N + 1], cnt[N + 1];
 
   struct {
@@ -92,12 +92,12 @@ struct ScapeGoat {
     int arr[N + 1];
     int& operator[](int i) { return arr[i]; }
     void clr()             { siz = 0; }
-    void push_back(int x)  { arr[siz++] = x; }
+    void push(int x)       { arr[siz++] = x; }
   } arr;
 
   int node(T x) {
     tot += 1;
-    key[tot] = x, frq[tot] = 1;
+    val[tot] = x, frq[tot] = 1;
     l[tot] = r[tot] = 0;
     siz[tot] = dsiz[tot] = cnt[tot] = 1;
     return tot;
@@ -119,7 +119,7 @@ struct ScapeGoat {
   void flatten(int p) {
     if (p == 0) return;
     flatten(l[p]);
-    if (frq[p] > 0) arr.push_back(p);
+    if (frq[p] > 0) arr.push(p);
     flatten(r[p]);
   }
 
@@ -141,8 +141,8 @@ struct ScapeGoat {
   void insert(int &p, T x, bool enable = true) {
     bool                                balance = !check(p);
     if       (p == 0)                   return (void)(p = node(x));
-    if       (x < key[p])               insert(l[p], x, enable && balance);
-    else if  (x > key[p])               insert(r[p], x, enable && balance);
+    if       (x < val[p])               insert(l[p], x, enable && balance);
+    else if  (x > val[p])               insert(r[p], x, enable && balance);
     else                                frq[p] += 1;
                                         pull(p);
     if       (enable && !balance)       rebuild(p);
@@ -151,58 +151,39 @@ struct ScapeGoat {
   // lazy remove, x must exists
   void remove(int &p, T x, bool enable = true) {
     bool                                balance = !check(p);
-    if       (x < key[p])               remove(l[p], x, enable && balance);
-    else if  (x > key[p])               remove(r[p], x, enable && balance);
+    if       (x < val[p])               remove(l[p], x, enable && balance);
+    else if  (x > val[p])               remove(r[p], x, enable && balance);
     else                                frq[p] = std::max(frq[p] - 1, 0);
                                         pull(p);
     if       (enable && !balance)       rebuild(p);
   }
 
-  // all-goat
-
-  // void insert(int &p, T x) {
-  //   if       (p == 0)                   return (void)(p = node(x));
-  //   if       (x < key[p])               insert(l[p], x);
-  //   else if  (x > key[p])               insert(r[p], x);
-  //   else                                frq[p] += 1;
-  //                                       pull(p);
-  //   if       (check(p))                 rebuild(p);
-  // }
-
-  // // lazy remove, x must exists
-  // void remove(int &p, T x) {
-  //   if       (x < key[p])               remove(l[p], x);
-  //   else if  (x > key[p])               remove(r[p], x);
-  //   else                                frq[p] = std::max(frq[p] - 1, 0);
-  //                                       pull(p);
-  //   if       (check(p))                 rebuild(p);
-  // }
-
   // return [0, cnt[p]-1], nums of < x
   int rank(int p, T x) {
     if       (p == 0)                   return 0;
-    if       (x < key[p])               return rank(l[p], x);
-    else if  (x > key[p])               return cnt[l[p]] + frq[p] + rank(r[p], x);
+    if       (x < val[p])               return rank(l[p], x);
+    else if  (x > val[p])               return cnt[l[p]] + frq[p] + rank(r[p], x);
     else                                return cnt[l[p]];
   }
 
   // k in [1, cnt[p]]
-  T* kth(int p, int k) {
-    if       (p == 0)                   return nullptr;
+  int kth(int p, int k) {
+    if       (p == 0)                   return -1;
     if       (k <= cnt[l[p]])           return kth(l[p], k);
     else if  (k > cnt[l[p]] + frq[p])   return kth(r[p], k - cnt[l[p]] - frq[p]);
-    else                                return &key[p];
+    else                                return p;
   }
 
-  T* prev(int p, T x) { return kth(p, rank(p, x)); }
-  T* next(int p, T x) { return kth(p, rank(p, x + 1) + 1); }
+  int     prev      (int p, T x)      { return kth(p, rank(p, x)); }
+  int     next      (int p, T x)      { return kth(p, rank(p, x + 1) + 1); }
 
-  void insert (T x)   { insert(rt, x); }
-  void remove (T x)   { remove(rt, x); }
-  int  rank   (T x)   { return rank(rt, x); }
-  T*   kth    (int k) { return kth(rt, k); }
-  T*   prev   (T x)   { return prev(rt, x); }
-  T*   next   (T x)   { return next(rt, x); }
+  void    clear     ()                { tot = rt = 0; }
+  void    insert    (T x)             { insert(rt, x); }
+  void    remove    (T x)             { remove(rt, x); }
+  int     rank      (T x)             { return rank(rt, x); }
+  int     kth       (int k)           { return kth(rt, k); }
+  int     prev      (T x)             { return prev(rt, x); }
+  int     next      (T x)             { return next(rt, x); }
 };
 
 using i64 = int64_t;
@@ -224,11 +205,11 @@ int main() {
     } else if (op == 3) {
       std::cout << arr.rank(x) + 1 << '\n';
     } else if (op == 4) {
-      std::cout << *arr.kth(x) << '\n';
+      std::cout << arr.val[arr.kth(x)] << '\n';
     } else if (op == 5) {
-      std::cout << *arr.prev(x) << '\n';
+      std::cout << arr.val[arr.prev(x)] << '\n';
     } else if (op == 6) {
-      std::cout << *arr.next(x) << '\n';
+      std::cout << arr.val[arr.next(x)] << '\n';
     }
   }
 }
