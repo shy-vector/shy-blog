@@ -57,24 +57,24 @@ export const profileConfig: ProfileConfig = {
 	name: "Shy_Vector",
 	bio: "the end of this world, and the girl who crossed the moon's oceans.",
 	links: [
-    {
+		{
 			name: "Bilibili",
 			icon: "fa6-brands:bilibili", // Visit https://icones.js.org/ for icon codes
 			// You will need to install the corresponding icon set if it's not already included
 			// `pnpm add @iconify-json/<icon-set-name>`
 			url: "https://space.bilibili.com/215499610",
 		},
-    {
+		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
 			url: "https://github.com/shy-vector",
 		},
-    {
+		{
 			name: "X",
-			icon: "fa6-brands:x-twitter", 
+			icon: "fa6-brands:x-twitter",
 			url: "https://x.com/ShyVector44402",
 		},
-    {
+		{
 			name: "Steam",
 			icon: "fa6-brands:steam",
 			url: "https://steamcommunity.com/id/Shy_Vector/",

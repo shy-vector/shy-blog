@@ -4,7 +4,7 @@ published: 2025-04-16
 updated: 2025-07-19
 description: '直接根据 Tag 施加的先后顺序来维护 Tag 队列，时间复杂度并不好看．设法将当前节点的 Tag 与子节点的旧 Tag 合并，就成了优化复杂度的关键．'
 image: ''
-tags: [Algorithm, Data Structure, SGT]
+tags: [Algorithm, Data Structure]
 category: 'Algorithm'
 draft: false
 ---
