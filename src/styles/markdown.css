@@ -36,7 +36,7 @@
     code {
         @apply bg-[var(--inline-code-bg)] text-[var(--inline-code-color)] px-1 py-0.5 rounded-md overflow-hidden;
 
-        font-family: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Noto Sans SC, Menlo, Monaco, Consolas, Liberation Mono, Courier New, monospace;
+        font-family: Monaco, 'JetBrains Mono Variable', Consolas, ui-monospace, SFMono-Regular, Noto Sans SC, Menlo, Liberation Mono, Courier New, monospace;
         &:before {
             content:none;
         }
@@ -94,7 +94,10 @@
         li::marker {
             @apply text-[var(--primary)];
         }
+        line-height: 1.3;
+        margin-top: 1em;
     }
+
 
     blockquote {
         @apply not-italic border-transparent relative;
@@ -114,7 +117,30 @@
     .katex-display-container {
         max-width: 100%;
         overflow-x: auto;
+        line-height: 1.5;
+        margin: 0.6em 0em !important;
+        padding: 0 !important;
+    }
+ 
+    .katex-display {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    font-size: auto;
+    line-height: 1.6;
+
+    p {
         margin: 1em 0;
     }
-    
+
+    table {
+        @apply my-2;
+        border-collapse: collapse;
+    }
+
+    table th,
+    table td {
+        line-height: 1.2;
+    }
 }

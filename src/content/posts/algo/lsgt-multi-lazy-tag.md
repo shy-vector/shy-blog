@@ -111,23 +111,23 @@ struct Info {
 因此 Tag 的合并如下：当 $\text{flag}_2 = \text{false}$ 时，
 
 $$
-\begin{align*}
+\begin{aligned}
 c &= c_1 \\
 k &= k_2k_1 \\
 b &= k_2b_1 + b_2 \\
 \text{flag} &= \text{flag}_1
-\end{align*}
+\end{aligned}
 $$
 
 当 $\text{flag}_2 = \text{true}$ 时，
 
 $$
-\begin{align*}
+\begin{aligned}
 c &= c_2 \\
 k &= k_2 \\
 b &= b_2 \\
 \text{flag} &= \text{flag}_2
-\end{align*}
+\end{aligned}
 $$
 
 Info 的设计反倒不难：当 $\text{flag} = \text{false}$ 时，Info 的立方和变为
@@ -139,21 +139,21 @@ $$
 可以看出我们的 Info 还需要额外维护平方和还有和：
 
 $$
-\begin{align*}
+\begin{aligned}
 &\sum(kx+b)^2 = k^2 \sum x^2 + 2kb \sum x + (r - l + 1)b^2 \\
 &\sum(kx+b) \:\,= k \sum x + (r - l + 1)b
-\end{align*}
+\end{aligned}
 $$
 
 当 $\text{flag} = \text{true}$ 时，不依赖 Info 原有值，Info 的三种和直接修改为
 
 $$
-\begin{align*}
+\begin{aligned}
 &(r - l + 1)(kc + b)^3 \\
 &(r - l + 1)(kc + b)^2 \\
 &(r - l + 1)(kc + b) \\
 
-\end{align*}
+\end{aligned}
 $$
 
 ```cpp
@@ -237,34 +237,34 @@ struct Info {
 我们初步定义 $\text{Tag}_{k, \mathbf{b}}\, \mathbf{x} = k\,\text{rot}\,\mathbf{x} + \mathbf{b}$，那么 Tag 合并时：
 
 $$
-\begin{align*}
+\begin{aligned}
 & \text{Tag}_{k_2, \mathbf{b}_2}\text{Tag}_{k_1, \mathbf{b}_1} \mathbf{x} \\
 =\,& k_2\,\text{rot}(k_1\,\text{rot}\,\mathbf{x} + \mathbf{b}_1) + \mathbf{b}_2 \\
 =\,& k_2(k_1\,\text{rot}^2\,\mathbf{x} + \text{rot}\,\mathbf{b}_1) + \mathbf{b}_2 \\
 =\,& (k_2k_1)\,\text{rot}^2\,\mathbf{x} + (k_2\,\text{rot}\,\mathbf{b}_1 + \mathbf{b}_2)
-\end{align*}
+\end{aligned}
 $$
 
 没法重新合并成一个 Tag．观察形式，我们需要把 Tag 重新定义成 $\text{Tag}_{t, k, \mathbf{b}} = k\,\text{rot}^t\,\mathbf{x} + \mathbf{b}$，$t \in \{0, 1, 2\}$，重新推导 Tag 合并：
 
 $$
-\begin{align*}
+\begin{aligned}
 & \text{Tag}_{t_2, k_2, \mathbf{b}_2}\text{Tag}_{t_1, k_1, \mathbf{b}_1}\,\mathbf{x} \\
 =\,& k_2\,\text{rot}^{t_2}(k_1\,\text{rot}^{t_1}\,\mathbf{x} + \mathbf{b}_1) + \mathbf{b}_2 \\
 =\,& k_2(k_1\,\text{rot}^{t_2 + t_1}\,\mathbf{x} + \text{rot}^{t_2}\,\mathbf{b}_1) + \mathbf{b}_2 \\
 =\,& (k_2k_1)\,\text{rot}^{(t_2 + t_1) \:\text{mod}\: 3}\,\mathbf{x} + (k_2\,\text{rot}^{t_2 \:\text{mod}\: 3}\,\mathbf{b}_1 + \mathbf{b}_2) \\
 =\,& \text{Tag}_{t, k, \mathbf{b}}\,\mathbf{x}
-\end{align*}
+\end{aligned}
 $$
 
 合并成功，此时 Tag 的合并为：
 
 $$
-\begin{align*}
+\begin{aligned}
 t &= (t_1 + t_2) \:\text{mod}\:3 \\
 k &= k_2k_1 \\
 \mathbf{b} &= k_2\,\text{rot}^{t_2 \:\text{mod}\: 3}\,\mathbf{b}_1 + \mathbf{b}_2
-\end{align*}
+\end{aligned}
 $$
 
 到设计 Info 的时候了，我们需要维护区间所有三元组的和，才能获得模．
@@ -350,10 +350,10 @@ struct Info {
 设 $A = \begin{bmatrix} 3 & 2 \\ 3 & -2 \end{bmatrix}$，$\mathbf{b} = \begin{bmatrix} b \\ b \end{bmatrix}$，$\text{swap}\begin{bmatrix} x \\ y \end{bmatrix} = \begin{bmatrix} y \\ x \end{bmatrix}$，不管你凭直觉规定的优先级是什么，你可能在合并 Tag 的时候写出类似下面这个式子：
 
 $$
-\begin{align*}
+\begin{aligned}
 & A\,\text{swap}(A\,\text{swap}\,\mathbf{x} + \mathbf{b}_1) + \mathbf{b}_2 \\
 =& A^2\mathbf{x} + (A\,\text{swap}\,\mathbf{b}_1 + \mathbf{b}_2)
-\end{align*}
+\end{aligned}
 $$
 
 发现无法合并，你可能会重新定义 $\text{Tag}_{n, t, b}\,\mathbf{x} = A^{n}\,\text{swap}^t\,\mathbf{x} + \mathbf{b}$，但会像之前的例子，很麻烦．
