@@ -62,6 +62,7 @@ draft: false
 GPT 表项格式：
 
 | 起始字节 | 内容 |
+| --- | --- |
 | 0 | 分区类型 |
 | 16 | 分区 GUID |
 | 32 | 起始 LBA (小端序) |
@@ -72,6 +73,7 @@ GPT 表项格式：
 GPT 格式的硬盘 (如 `/dev/sda`、`/dev/nvme0n1`) 分区类似于
 
 | 分区 | 容量 | 文件系统 |
+| --- | --- | --- |
 | ESP | ≈ 500 MB | FAT32 |
 | Windows | 500+ GB | NTFS |
 | Arch Linux | 300+ GB | Btrfs |
