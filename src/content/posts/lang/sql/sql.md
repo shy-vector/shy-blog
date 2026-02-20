@@ -25,13 +25,13 @@ sudo systemctl enable mysqld.service
 ```
 
 :::warning
-`mysqld` 的时候要留意，输出的内容含有 `root` 用户的默认密码。
+`mysqld` 的时候要留意，输出的内容含有 `root` 用户的默认密码．
 
 别 `clear` 把密码吃了，小馋猫 😋
 :::
 
 :::tip
-不想用图形界面的话，`mycli` 可以提供语法高亮和命令补全。
+不想用图形界面的话，`mycli` 可以提供语法高亮和命令补全．
 
 ::github{repo="dbcli/mycli"}
 
@@ -40,7 +40,7 @@ yay -S mycli
 ```
 :::
 
-登录 `root` 账户，修改密码。
+登录 `root` 账户，修改密码．
 
 ```zsh
 mysql -u root -p [-h localhost -P 3306]
@@ -112,7 +112,7 @@ Time: 0.003s
 
 ### `database` 和 `table`
 
-我想把 `study_sql` 这个数据库名称改成 `shy_db`。
+我想把 `study_sql` 这个数据库名称改成 `shy_db`．
 
 ```sql
 CREATE DATABASE IF NOT EXISTS shy_db;
@@ -176,7 +176,7 @@ Time: 0.004s
 Time: 0.002s
 ```
 
-与此同时，我又想把表名 `hello` 改成 `hello_tb`。
+与此同时，我又想把表名 `hello` 改成 `hello_tb`．
 
 ```sql
 RENAME TABLE hello TO hello_tb;
@@ -352,8 +352,8 @@ user2_tb
 ```
 
 :::warning
-这里直接使用了 `CREATE TABLE tb1 AS SELECT * FROM tb2` 后，字段类型保留，但**约束丢失**。
-应该使用 `CREATE TABLE tb1(...) AS SELECT * FROM tb2`，手动确定约束。
+这里直接使用了 `CREATE TABLE tb1 AS SELECT * FROM tb2` 后，字段类型保留，但**约束丢失**．
+应该使用 `CREATE TABLE tb1(...) AS SELECT * FROM tb2`，手动确定约束．
 经测试，从 `FLOAT(3,2)` 到 `DOUBLE` 的精度损失情况：
 
 ```text
@@ -401,25 +401,25 @@ WHERE id > 1;
 ```
 
 :::warning
-1. 如果执行 `INSERT` 但最终回滚（比如主键冲突、唯一键冲突），计数器 `AUTO_INCREMENT` 仍会自增，导致 `user_tb` 后面的 `id` 跳号。
-2. 执行 `DELETE` 不会使计数器清零。
-3. 除此之外也有很多隐性消耗导致跳号，比如批量插入的自增 ID 预分配。
+1. 如果执行 `INSERT` 但最终回滚（比如主键冲突、唯一键冲突），计数器 `AUTO_INCREMENT` 仍会自增，导致 `user_tb` 后面的 `id` 跳号．
+2. 执行 `DELETE` 不会使计数器清零．
+3. 除此之外也有很多隐性消耗导致跳号，比如批量插入的自增 ID 预分配．
 
-自增 ID 的设计目标是保证**唯一性**，而非连续性，所以无法完全避免跳号。
+自增 ID 的设计目标是保证**唯一性**，而非连续性，所以无法完全避免跳号．
 :::
 
 :::tip[`INSERT`-like 语句]
-1. **simple insert**: 如 `INSERT INTO tb () VALUES ()`，可预先确定插入行数。
-2. **bulk insert**: 如 `INSERT INTO tb SELECT ... FROM ...`、`LOAD data`，插入行数（需要申请的自增值数目）不可预期。
-3. **mixed-mode insert**: 如 `INSERT INTO tb (id,name) VALUES (1,'a'), (NULL,'b'), (5,'c'), (NULL,'d');` 自增值被指定。
+1. **simple insert**: 如 `INSERT INTO tb () VALUES ()`，可预先确定插入行数．
+2. **bulk insert**: 如 `INSERT INTO tb SELECT ... FROM ...`、`LOAD data`，插入行数（需要申请的自增值数目）不可预期．
+3. **mixed-mode insert**: 如 `INSERT INTO tb (id,name) VALUES (1,'a'), (NULL,'b'), (5,'c'), (NULL,'d');` 自增值被指定．
 :::
 
 :::tip[`innodb_autoinc_lock_mode`]
-`innodb_autoinc_lock_mode` 是 MySQL InnoDB 存储引擎的一个系统变量，它控制着自增（`AUTO_INCREMENT`）值的锁定机制。这个设置对于高并发的数据库操作，特别是插入（`INSERT`）操作，有着显著的性能影响。
+`innodb_autoinc_lock_mode` 是 MySQL InnoDB 存储引擎的一个系统变量，它控制着自增（`AUTO_INCREMENT`）值的锁定机制．这个设置对于高并发的数据库操作，特别是插入（`INSERT`）操作，有着显著的性能影响．
 
-1. `0`，传统锁模式。整个表 `auto_inc` 的锁在同一时刻只会被一个 `INSERT`-like 语句持有，直至语句结束。保证自增值连续。
-2. `1`，连续锁模式。对于 simple insert，持有相应数量的自增值互斥锁来避免使用表锁，这个锁仅在分配过程中持有，不会持续到语句结束，可以保证自增值的连续。对于 bulk insert 仍然使用表锁（源表使用共享锁，目标表使用自增锁）。mixed-mode insert 会分配数量多于所需的自增锁，自动分配，过量舍弃。
-3. `2`，交叉锁模式（MySQL 8.0+ 默认）。不会使用表锁，并发性良好。**单个 simple insert 语句生成的自增值连续，bulk insert 则无法保证。**
+1. `0`，传统锁模式．整个表 `auto_inc` 的锁在同一时刻只会被一个 `INSERT`-like 语句持有，直至语句结束．保证自增值连续．
+2. `1`，连续锁模式．对于 simple insert，持有相应数量的自增值互斥锁来避免使用表锁，这个锁仅在分配过程中持有，不会持续到语句结束，可以保证自增值的连续．对于 bulk insert 仍然使用表锁（源表使用共享锁，目标表使用自增锁）．mixed-mode insert 会分配数量多于所需的自增锁，自动分配，过量舍弃．
+3. `2`，交叉锁模式（MySQL 8.0+ 默认）．不会使用表锁，并发性良好．**单个 simple insert 语句生成的自增值连续，bulk insert 则无法保证．**
 :::
 
 重新调整表格字段
@@ -531,7 +531,7 @@ user2_tb
 +----+-----------+--------+--------+--------+
 ```
 
-我想让这两张表**横向合并**至新的表。先创建新表。
+我想让这两张表**横向合并**至新的表．先创建新表．
 
 ```sql
 CREATE TABLE user3_tb (
@@ -569,9 +569,9 @@ user3_tb
 ```
 
 :::tip[`JOIN`]
-1. `INNER JOIN` 合并时，两张表的失匹项都将被舍弃。
-2. `LEFT JOIN` 合并时，左表完全保留，失匹项来自右表的字段将被设为默认值；右表的失匹项将被舍弃。
-3. `RIGHT JOIN` 合并时，右表完全保留，失匹项来自左表的字段将被设为默认值；左表的失匹项将被舍弃。
+1. `INNER JOIN` 合并时，两张表的失匹项都将被舍弃．
+2. `LEFT JOIN` 合并时，左表完全保留，失匹项来自右表的字段将被设为默认值；右表的失匹项将被舍弃．
+3. `RIGHT JOIN` 合并时，右表完全保留，失匹项来自左表的字段将被设为默认值；左表的失匹项将被舍弃．
 :::
 
 内合并：
@@ -591,11 +591,11 @@ SELECT * FROM user3_tb;
 ```
 
 ```text
-注：这里漏了一段操作。
+注：这里漏了一段操作．
 user2_tb 的 `Not Found` 原本是别的值，
 合并后的 user3_tb 原本有 4 个项，
 后面改过来的时候需要 DELETE 整个 user3_tb，
-计数器不归零，但本应从 5 开始，而下面从 8 开始。
+计数器不归零，但本应从 5 开始，而下面从 8 开始．
 
 user3_tb (INNER JOIN)
 +----+-----------+-----------+--------+--------+--------+--------+-----------+------------+---------------------+

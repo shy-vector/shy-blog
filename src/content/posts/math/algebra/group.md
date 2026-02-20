@@ -9,4 +9,4 @@ category: 'Group Theory'
 draft: false
 ---
 
-待施工，可能永远不施工。
+待施工，可能永远不施工．

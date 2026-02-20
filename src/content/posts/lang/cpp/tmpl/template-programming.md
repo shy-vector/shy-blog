@@ -2,7 +2,7 @@
 title: 模板元编程
 published: 2025-08-15
 updated: 2025-08-15
-description: '本文仅举 C++ 模板元编程若干实践案例，仅供个人使用。'
+description: '本文仅举 C++ 模板元编程若干实践案例，仅供个人使用．'
 image: ''
 tags: [C++, SFINAE, CRTP]
 category: 'C++'
@@ -10,15 +10,15 @@ draft: false
 ---
 
 :::important
-本文不再介绍 C++ 模板的基础用法。
+本文不再介绍 C++ 模板的基础用法．
 :::
 
 ## 模板也是「函数」
 
-我们可以把模板也看成一种「函数」，这个「函数」的输入输出不仅限于值，还可以是类型，甚至「函数」。
+我们可以把模板也看成一种「函数」，这个「函数」的输入输出不仅限于值，还可以是类型，甚至「函数」．
 
 :::tip[案例 1]
-统计若干类型的总大小。
+统计若干类型的总大小．
 :::
 
 ```cpp {"模板的输入形式":4-6} ins={"无输入时返回 0":8-10} ins={"输入个数超过 1，递归求解":12-16}
@@ -85,7 +85,7 @@ int main() {
 ```
 :::
 
-想要保持这种函数式写法，关键是不要真的传对象，而是传类型信息。
+想要保持这种函数式写法，关键是不要真的传对象，而是传类型信息．
 
 ```cpp {"if constexpr 条件编译让我们不用到处写 get_size 特化":6-11} {"Dummy 仅包装类型":15-16}
 template <class T>
@@ -108,12 +108,12 @@ int main() {
 ```
 
 :::note[关于 `constexpr` 函数]
-若 `constexpr` 函数中存在无法在编译期求值的参数，则 `constexpr` 函数和普通函数一样在运行时求值，此时的返回值不是常量表达式。
+若 `constexpr` 函数中存在无法在编译期求值的参数，则 `constexpr` 函数和普通函数一样在运行时求值，此时的返回值不是常量表达式．
 
-如果想强制要求编译时求值，可以使用 C++20 的 `consteval`，运行时求值将报错。
+如果想强制要求编译时求值，可以使用 C++20 的 `consteval`，运行时求值将报错．
 :::
 
-二元 fold-expression 可以规定 `sizeof...(T)` 为 `0` 时的递归终止值，写法更简洁。另外自 C++20 开始，`std::type_identity` 可以代替手写 `Dummy` 包装类。
+二元 fold-expression 可以规定 `sizeof...(T)` 为 `0` 时的递归终止值，写法更简洁．另外自 C++20 开始，`std::type_identity` 可以代替手写 `Dummy` 包装类．
 
 ```cpp {"用变量模板简写表达式":6-8}
 template <class ...T>
@@ -145,7 +145,7 @@ auto ret = get_size<TypeA, TypeB>();
 - 否则，如果 `T` 为 `std::tuple<T0, ..., TN>`：
   - 如果 `0 <= I && I <= N` 为 `true`，返回 `TI`；
   - 否则，返回 `void`；
-- 否则，返回 `void`。
+- 否则，返回 `void`．
 :::
 
 ```cpp
@@ -182,7 +182,7 @@ int main() {
 - 非类型模板形参的默认值表达式中，如 `template <class T, auto val = typename T::val_type{}>`，即 `template <class T, T::val_type val = typename T::val_type{}>`；
 - 模板实参类型，如 `using t = Tup<typename Tmpl<Ts>::type...>;`；
 - 函数形参类型，如 `void func(typename T::val_type x) {...}`；
-- 在函数或者块作用域内变量/函数声明的类型，如 `void func() { typename T::val_type val; }`、`void func() { typename T::val_type gunc(); }`。
+- 在函数或者块作用域内变量/函数声明的类型，如 `void func() { typename T::val_type val; }`、`void func() { typename T::val_type gunc(); }`．
 :::
 
 函数式写法：
@@ -266,13 +266,13 @@ consteval auto get_type(std::type_identity<std::tuple<Ts...>>) {
 }
 ```
 
-包索引表达式 `...[]` 支持模板参数包、函数参数包、结构化绑定包、lambda 初始化捕获包。
+包索引表达式 `...[]` 支持模板参数包、函数参数包、结构化绑定包、lambda 初始化捕获包．
 :::
 
 :::tip[案例 3]
-现有类型 `Tup<T1, ..., TN>`，映射 `Tmpl: T -> U`。实现模板 `mapping`，要求：
+现有类型 `Tup<T1, ..., TN>`，映射 `Tmpl: T -> U`．实现模板 `mapping`，要求：
 
-- 返回 `Tup<Tmpl<T0>, ..., Tmpl<TN>>`。
+- 返回 `Tup<Tmpl<T0>, ..., Tmpl<TN>>`．
 :::
 
 ```cpp {"「函数」Tmpl 作为「函数」的输入":3-5} {12-13} ins={"std::variant<int[10], char[10], bool[10]>":23-24}
@@ -304,7 +304,7 @@ int main() {
 ```
 
 :::tip[案例 4]
-实现模板 `array_wrapper: N -> (Tmpl: T -> T[N])`。
+实现模板 `array_wrapper: N -> (Tmpl: T -> T[N])`．
 :::
 
 ```cpp collapse={4-16} {"输出是模板 Tmpl: T -> T[N]":20-22} ins={"std::tuple<int[7], char[7][10], bool[7]>":27-28}
@@ -341,11 +341,11 @@ int main() {
 
 ## type_traits
 
-标准库提供了许多很有用的「函数」，不用我们手搓。
+标准库提供了许多很有用的「函数」，不用我们手搓．
 
-对于大多数操作，相应的 trait 有 `noexcept` 的版本，如 `std::is_invocable_v<T, Args...>` 对应于 `std::is_nothrow_invocable_v<T, Args...>`。
+对于大多数操作，相应的 trait 有 `noexcept` 的版本，如 `std::is_invocable_v<T, Args...>` 对应于 `std::is_nothrow_invocable_v<T, Args...>`．
 
-对于含特殊成员函数的类型，相应的 trait 有 `trivial` 的版本，如 `std::is_constructible_v<T, Args...>` 对应于 `is_trivially_constructible_v<T, Args...>`。
+对于含特殊成员函数的类型，相应的 trait 有 `trivial` 的版本，如 `std::is_constructible_v<T, Args...>` 对应于 `is_trivially_constructible_v<T, Args...>`．
 
 ### 类型判断
 
@@ -367,16 +367,16 @@ int main() {
 | `std::is_lvalue_reference_v<T>`                | 检查 `T` 是否为左值引用类型 |
 | `std::is_rvalue_reference_v<T>`                | 检查 `T` 是否为右值引用类型 |
 
-[^1]: [**基本类型**](https://cppreference.cn/w/cpp/language/types) 包括可带 cv 限定的 `void`、可带 cv 限定的 `std::nullptr_t`、整型 [^13]、浮点型，与 [**复合类型**](https://cppreference.cn/w/cpp/language/type) `std::is_compound_v<T>` 相对。
+[^1]: [**基本类型**](https://cppreference.cn/w/cpp/language/types) 包括可带 cv 限定的 `void`、可带 cv 限定的 `std::nullptr_t`、整型 [^13]、浮点型，与 [**复合类型**](https://cppreference.cn/w/cpp/language/type) `std::is_compound_v<T>` 相对．
 
-[^2]: `nullptr` 是 [`std::nullptr_t`](https://en.cppreference.com/w/cpp/types/nullptr_t.html) 的实例。\
+[^2]: `nullptr` 是 [`std::nullptr_t`](https://en.cppreference.com/w/cpp/types/nullptr_t.html) 的实例．\
 `std::nullptr_t` 并不是指针类型，即 `std::is_pointer_v<std::nullptr_t> -> false`；\
 `std::nullptr_t` 可 (显式/隐式) 转换成指针类型，如 `void *`，`char const *`；\
-`std::nullptr_t` 不能在模板中做类型推导 `std::nullptr_t -> T*`。
+`std::nullptr_t` 不能在模板中做类型推导 `std::nullptr_t -> T*`．
 
-[^3]: [**算术类型**](https://cppreference.cn/w/c/language/arithmetic_types) 包括整型、浮点类型、这些类型的 cv 限定版本。
+[^3]: [**算术类型**](https://cppreference.cn/w/c/language/arithmetic_types) 包括整型、浮点类型、这些类型的 cv 限定版本．
 
-[^4]: [**整型**](https://cppreference.cn/w/cpp/language/types#Integral_types) 包括布尔类型、字符类型、整数类型。
+[^4]: [**整型**](https://cppreference.cn/w/cpp/language/types#Integral_types) 包括布尔类型、字符类型、整数类型．
 
 [^5]: 只能检测普通指针、函数指针、成员指针，不能检测智能指针，需自定义 trait，如：`template <class T> struct is_smart<std::shared_ptr<T>> : std::true_type {};`
 
@@ -400,21 +400,21 @@ int main() {
 | `std::is_bounded_array_v<T>`                   | 检查 `T` 是否为已知大小的数组类型 |
 | `std::is_unbounded_array_v<T>`                 | 检查 `T` 是否为未知大小的数组类型 |
 
-[^6]: 空类型不含非静态成员变量、虚函数、虚基类，如 `struct { static int x; int f(){} }`。
+[^6]: 空类型不含非静态成员变量、虚函数、虚基类，如 `struct { static int x; int f(){} }`．
 
-[^7]: [**平凡类型**](https://en.cppreference.com/w/cpp/named_req/TrivialType) 包括标量类型 [^100]、平凡类、这些类型的数组、cv 限定版本。\
-称一个类 [**可平凡复制**](https://en.cppreference.com/w/cpp/language/classes.html#Trivially_copyable_class)，当且仅当其 (复制/移动)(构造函数/赋值运算符)、析构函数都是默认的，且无虚函数、虚基类。\
-可平凡复制类型的内存分布是连续的，因此可以通过 `std::memcpy` 按字节将对象序列化成 `unsigned char []` 或 `std::byte []`。虽然内存连续，但内存布局和 C 语言不同，成员顺序由编译器决定 (比如访问权限相同的成员变量可能重新放在一起，C 语言不认识这些访问说明符)，因此不能兼容 C 程序。\
+[^7]: [**平凡类型**](https://en.cppreference.com/w/cpp/named_req/TrivialType) 包括标量类型 [^100]、平凡类、这些类型的数组、cv 限定版本．\
+称一个类 [**可平凡复制**](https://en.cppreference.com/w/cpp/language/classes.html#Trivially_copyable_class)，当且仅当其 (复制/移动)(构造函数/赋值运算符)、析构函数都是默认的，且无虚函数、虚基类．\
+可平凡复制类型的内存分布是连续的，因此可以通过 `std::memcpy` 按字节将对象序列化成 `unsigned char []` 或 `std::byte []`．虽然内存连续，但内存布局和 C 语言不同，成员顺序由编译器决定 (比如访问权限相同的成员变量可能重新放在一起，C 语言不认识这些访问说明符)，因此不能兼容 C 程序．\
 
-[^8]: 一个类在可平凡复制的基础上，具有平凡的默认构造函数，这时称它为 [**平凡类**](https://en.cppreference.com/w/cpp/language/classes.html#Trivial_class)。
+[^8]: 一个类在可平凡复制的基础上，具有平凡的默认构造函数，这时称它为 [**平凡类**](https://en.cppreference.com/w/cpp/language/classes.html#Trivial_class)．
 
-[^9]: [**标准布局类型**](https://en.cppreference.com/w/cpp/named_req/StandardLayoutType.html) 包括标量类型 [^100]、标准布局类、这些类型的数组、cv 限定版本。\
-一个类如果无虚函数、虚基类，所有非静态数据成员都具有相同的访问说明符，在继承体系中最多只有一个类中有非静态数据成员，在继承体系中所有类的第一个非静态成员的类型与其基类不同 (在 C++ 中，空基类的地址与第一个非静态成员共享。一旦相同，由于标准规定相同类型的对象地址必须不同，势必多分配出空间以存储基类地址，内存布局发生变化)，这时类的内存布局 (成员在内存中的排列方式) 与 C 语言的结构体完全一致，也称标准布局，这个类也被称为 [**标准布局类**](https://en.cppreference.com/w/cpp/language/classes.html#Standard-layout_class)。标准布局类允许用户自定义成员函数。\
-如果平凡类型使用标准内存布局，则称这个类型为 [**POD 类型**](https://en.cppreference.com/w/cpp/named_req/PODType)，与 C 语言的类型无缝衔接，相应的 trait 为 `std::is_pod_v<T>`，该 trait 在 C++20 中弃用，取而代之的是 `std::is_trivial_v<T> && std::is_standard_layout_v<T>`。
+[^9]: [**标准布局类型**](https://en.cppreference.com/w/cpp/named_req/StandardLayoutType.html) 包括标量类型 [^100]、标准布局类、这些类型的数组、cv 限定版本．\
+一个类如果无虚函数、虚基类，所有非静态数据成员都具有相同的访问说明符，在继承体系中最多只有一个类中有非静态数据成员，在继承体系中所有类的第一个非静态成员的类型与其基类不同 (在 C++ 中，空基类的地址与第一个非静态成员共享．一旦相同，由于标准规定相同类型的对象地址必须不同，势必多分配出空间以存储基类地址，内存布局发生变化)，这时类的内存布局 (成员在内存中的排列方式) 与 C 语言的结构体完全一致，也称标准布局，这个类也被称为 [**标准布局类**](https://en.cppreference.com/w/cpp/language/classes.html#Standard-layout_class)．标准布局类允许用户自定义成员函数．\
+如果平凡类型使用标准内存布局，则称这个类型为 [**POD 类型**](https://en.cppreference.com/w/cpp/named_req/PODType)，与 C 语言的类型无缝衔接，相应的 trait 为 `std::is_pod_v<T>`，该 trait 在 C++20 中弃用，取而代之的是 `std::is_trivial_v<T> && std::is_standard_layout_v<T>`．
 
-[^10]: [**聚合类型**](https://en.cppreference.com/w/cpp/language/aggregate_initialization.html) 可以是数组，也可以是一个类：这个类没有自定义构造函数，所有非静态成员都是 `public` 的，无虚函数、虚基类，继承只能是公有继承。在 C++17 之前，这个类不能有基类。聚合类型的特色便是可以聚合初始化、在结构化绑定中可分解。
+[^10]: [**聚合类型**](https://en.cppreference.com/w/cpp/language/aggregate_initialization.html) 可以是数组，也可以是一个类：这个类没有自定义构造函数，所有非静态成员都是 `public` 的，无虚函数、虚基类，继承只能是公有继承．在 C++17 之前，这个类不能有基类．聚合类型的特色便是可以聚合初始化、在结构化绑定中可分解．
 
-[^100]: [**标量类型**](https://en.cppreference.com/w/cpp/named_req/ScalarType.html) 包括算术类型 [^3]、枚举类型、指针类型、成员指针类型、`std::nullptr_t`、这些类型的 cv 限定版本，对应的 trait 为 `std::is_scalar_v<T>`。
+[^100]: [**标量类型**](https://en.cppreference.com/w/cpp/named_req/ScalarType.html) 包括算术类型 [^3]、枚举类型、指针类型、成员指针类型、`std::nullptr_t`、这些类型的 cv 限定版本，对应的 trait 为 `std::is_scalar_v<T>`．
 
 #### 可支持的操作
 
@@ -434,17 +434,17 @@ int main() {
 | `std::is_invocable_v<T, Args...>`              | 检查能否以参数类型 `Args...` 调用 `T` [^16] |
 | `std::is_invocable_r_v<Ret, T, Args...>`       | 同上，并检查返回类型是否为 `Ret` |
 
-[^11]: 返回 `true`，当且仅当 `std::swap(std::declval<T>(), std::declval<U>())` 在不求值语境中是良构的。
+[^11]: 返回 `true`，当且仅当 `std::swap(std::declval<T>(), std::declval<U>())` 在不求值语境中是良构的．
 
-[^12]: 等价于 `std::is_swappable_with_v<T&, T&>`，只要 `T` 是可引用的类型 (其实就是非 `void`)，就返回 `true`。
+[^12]: 等价于 `std::is_swappable_with_v<T&, T&>`，只要 `T` 是可引用的类型 (其实就是非 `void`)，就返回 `true`．
 
-[^13]: 返回 `true`，当且仅当 `T obj(std::declval<Args>()...);` 在不求值语境中是良构的。
+[^13]: 返回 `true`，当且仅当 `T obj(std::declval<Args>()...);` 在不求值语境中是良构的．
 
-[^14]: 返回 `true`，当且仅当 `std::declval<T>() = std::declval<U>()` 在不求值语境中是良构的。
+[^14]: 返回 `true`，当且仅当 `std::declval<T>() = std::declval<U>()` 在不求值语境中是良构的．
 
-[^15]: `T` 是引用类型，或者 `std::declval<U&>().~U()` 在不求值语境中是良构的，其中 `U` 是 `T` 移除所有多维数组维度后的类型，即 `using U = std::remove_all_extents_t<T>;`，返回 `true`；对于可带 cv 限定的 `void`、函数类型、未知边界的数组，返回 `false`。
+[^15]: `T` 是引用类型，或者 `std::declval<U&>().~U()` 在不求值语境中是良构的，其中 `U` 是 `T` 移除所有多维数组维度后的类型，即 `using U = std::remove_all_extents_t<T>;`，返回 `true`；对于可带 cv 限定的 `void`、函数类型、未知边界的数组，返回 `false`．
 
-[^16]: 只要是能被 `std::invoke` 调用的类型都被称为 `invocable`，如函数、函数指针、成员函数指针、仿函数、lambda 表达式 (匿名仿函数)、`std::function` 对象、`std::bind` 对象。`std::is_invocable_v<T>` 仅检查语法上能否调用，可触发隐式转换。
+[^16]: 只要是能被 `std::invoke` 调用的类型都被称为 `invocable`，如函数、函数指针、成员函数指针、仿函数、lambda 表达式 (匿名仿函数)、`std::function` 对象、`std::bind` 对象．`std::is_invocable_v<T>` 仅检查语法上能否调用，可触发隐式转换．
 
 #### 类型关系
 
@@ -458,15 +458,15 @@ int main() {
 | `std::is_pointer_interconvertible_base_of_v<B, D>` | 检查 `D *` 能否安全转成 `B *` [^20] |
 | `std::is_pointer_interconvertible_with_class(M S::*mp)` | 检查 `S *` 能否安全转成 `M *` [^21] |
 
-[^17]: cv 限定符也要完全相同。
+[^17]: cv 限定符也要完全相同．
 
-[^18]: [**隐式转换**](https://en.cppreference.com/w/cpp/language/implicit_conversion.html) 主要发生在算术类型的标准转换、cv 限定的添加、从派生类到基类的指针/引用转换、从基类到派生类的成员 (变量/函数) 指针转换、从数组/函数到指针的类型退化、用户定义的非 `explicit` 单参构造函数、用户定义的 `explicit` 转换函数、函数实参到形参的转换、函数返回值到返回类型的转换。
+[^18]: [**隐式转换**](https://en.cppreference.com/w/cpp/language/implicit_conversion.html) 主要发生在算术类型的标准转换、cv 限定的添加、从派生类到基类的指针/引用转换、从基类到派生类的成员 (变量/函数) 指针转换、从数组/函数到指针的类型退化、用户定义的非 `explicit` 单参构造函数、用户定义的 `explicit` 转换函数、函数实参到形参的转换、函数返回值到返回类型的转换．
 
-[^19]: 若 `From` 和 `To` 都是可能带 cv 限定的 `void`，则返回 `true`。
+[^19]: 若 `From` 和 `To` 都是可能带 cv 限定的 `void`，则返回 `true`．
 
-[^20]: `D` 必须是标准内存布局 [^9]，才能保证从 `D *` 转来的 `B *` 仍能正常工作，否则 `D` 的首地址将存放非空基类 `B` 的信息。此外如果 `D` 和 `B` 相同，返回 `true`。
+[^20]: `D` 必须是标准内存布局 [^9]，才能保证从 `D *` 转来的 `B *` 仍能正常工作，否则 `D` 的首地址将存放非空基类 `B` 的信息．此外如果 `D` 和 `B` 相同，返回 `true`．
 
-[^21]: `s.*mp` (即 `s.m`) 与 `s` 首地址重合，相当于 `S` 必须是标准内存布局 [^8]，否则首地址将存放非空基类信息。此时 `reinterpret_cast<M&>(s)` 能唯一指代 `s.m`。此外要返回 `true`，`M` 得是对象类型，`mp` 是非空指针。
+[^21]: `s.*mp` (即 `s.m`) 与 `s` 首地址重合，相当于 `S` 必须是标准内存布局 [^8]，否则首地址将存放非空基类信息．此时 `reinterpret_cast<M&>(s)` 能唯一指代 `s.m`．此外要返回 `true`，`M` 得是对象类型，`mp` 是非空指针．
 
 ### 类型查询
 
@@ -477,7 +477,7 @@ int main() {
 | `std::extent_v<T, N>`                          | 查询 `T` 作为多维数组时在第 `N` 维的元素数量 [^22] |
 | `std::invoke_result_t<F, Args...>`             | 查询以参数类型 `Args...` 调用 `T` 返回的类型 |
 
-[^22]: 若相应维度的元素数量未知，则返回 `0`。
+[^22]: 若相应维度的元素数量未知，则返回 `0`．
 
 ### 类型处理
 
@@ -517,17 +517,17 @@ int main() {
 | `std::disjunction_v<B...>`                     | 对 `B...` 进行逻辑析取 [^24] |
 | `std::negation_v<B>`                           | 对 `B` 进行逻辑非 [^25] |
 
-[^23]: 若 `sizeof...(B)` 为 `0`，则 `std::conjunction<B...>` 继承 `std::true_type`，否则继承第一个 `bool(B::value)` 为 `false` 的 `B`，若 `bool(B::value) && ...` 为 `true`，继承最后一个 `B`。`B` 通常是 `std::true_type / std::false_type`。
+[^23]: 若 `sizeof...(B)` 为 `0`，则 `std::conjunction<B...>` 继承 `std::true_type`，否则继承第一个 `bool(B::value)` 为 `false` 的 `B`，若 `bool(B::value) && ...` 为 `true`，继承最后一个 `B`．`B` 通常是 `std::true_type / std::false_type`．
 
-[^24]: 若 `sizeof...(B)` 为 `0`，则 `std::disjunction<B...>` 继承 `std::false_type`，否则继承第一个 `bool(B::value)` 为 `true` 的 `B`，若 `bool(B::value) || ...` 为 `false`，继承最后一个 `B`。`B` 通常是 `std::true_type / std::false_type`。
+[^24]: 若 `sizeof...(B)` 为 `0`，则 `std::disjunction<B...>` 继承 `std::false_type`，否则继承第一个 `bool(B::value)` 为 `true` 的 `B`，若 `bool(B::value) || ...` 为 `false`，继承最后一个 `B`．`B` 通常是 `std::true_type / std::false_type`．
 
-[^25]: 继承 `std::bool_constant<!bool(B::value)>`。
+[^25]: 继承 `std::bool_constant<!bool(B::value)>`．
 
 ## 约束类型
 
 ### 利用 SFINAE 约束类型
 
-在模板实参推导或函数类型推导中，代换失败并不是错误，编译器仅在重载集中抛弃该特化，不会编译失败。在 C++20 之前，我们可以利用这一点对模板类型参数进行约束。
+在模板实参推导或函数类型推导中，代换失败并不是错误，编译器仅在重载集中抛弃该特化，不会编译失败．在 C++20 之前，我们可以利用这一点对模板类型参数进行约束．
 
 > 这里的代换失败，发生在 *immediate context* 中，即
 > 
@@ -537,9 +537,9 @@ int main() {
 > - 模板类模板形参中的默认实参类型/表达式
 > - 模板类模板参数列表里的类型/表达式
 > 
-> 函数模板签名里直接写到的类型/表达式都会出现在 *immediate context*。在这个语境因代换失败发生的错误，才被称为 *SFINAE error*。如果是触发了别的模板实例化、隐式成员生成等连锁反应而间接导致的错误是 *hard error* (会导致编译错误)。
+> 函数模板签名里直接写到的类型/表达式都会出现在 *immediate context*．在这个语境因代换失败发生的错误，才被称为 *SFINAE error*．如果是触发了别的模板实例化、隐式成员生成等连锁反应而间接导致的错误是 *hard error* (会导致编译错误)．
 > 
-> 最经典的例子就是 `<..., class = typename B<T>::type>`，要想取出 `type`，必须实例化 `B<T>`，一旦实例化失败 (比如 `B<T>` 不含 `type`)，则发生 *hard error*。
+> 最经典的例子就是 `<..., class = typename B<T>::type>`，要想取出 `type`，必须实例化 `B<T>`，一旦实例化失败 (比如 `B<T>` 不含 `type`)，则发生 *hard error*．
 
 :::tip[案例 1]
 对 `template <size_t N> void foo() {}` 中的 `N` 约束：
@@ -579,18 +579,18 @@ void foo() {
 
 ## CRTP
 
-CRTP (Curiously Recurring Template Pattern) 可以在编译期间把派生类的类型作为模板参数传递给基类。
+CRTP (Curiously Recurring Template Pattern) 可以在编译期间把派生类的类型作为模板参数传递给基类．
 
 ### 实现「静态多态」/「接口约定」
 
-所谓「静态多态」就是在编译期确定行为绑定，通过统一接口适配不同类型的具体实现。函数重载就是一种「静态多态」。
+所谓「静态多态」就是在编译期确定行为绑定，通过统一接口适配不同类型的具体实现．函数重载就是一种「静态多态」．
 
-CRTP 通过模板参数将派生类型注入基类，使得基类能在编译期调用派生类的具体实现，从而实现基类定义接口、派生类提供实现的「静态多态」。
+CRTP 通过模板参数将派生类型注入基类，使得基类能在编译期调用派生类的具体实现，从而实现基类定义接口、派生类提供实现的「静态多态」．
 
-CRTP 让派生类的基类各不相同，**失去了在抽象层处理的能力**，比如将不同派生类型的对象放入基类容器里、通过基类指针调用具体派生类实现等；而动态多态就可以，并能在运行时确定具体派生类型，从而调用具体派生类的实现。
+CRTP 让派生类的基类各不相同，**失去了在抽象层处理的能力**，比如将不同派生类型的对象放入基类容器里、通过基类指针调用具体派生类实现等；而动态多态就可以，并能在运行时确定具体派生类型，从而调用具体派生类的实现．
 
 :::note[另一种角度]
-上面是网上很多人使用的表述。也可以这么认为：CRTP 起到**使不同类存在若干相同接口的成员函数**的约定作用，没有什么继承关系。
+上面是网上很多人使用的表述．也可以这么认为：CRTP 起到**使不同类存在若干相同接口的成员函数**的约定作用，没有什么继承关系．
 :::
 
 ```cpp {"要求 T 具有 value 属性，can_level_up、fix_impl、attack_impl 方法":5-14} {"所谓的「静态多态」，某种程度上就是通过模板实现的":41-43} del={"没有在抽象层处理的能力":46-47}
@@ -644,7 +644,7 @@ int main() {
 }
 ```
 
-C++23 可以向非静态成员函数显式传入对象自身，在此之前都是通过隐式传入 `this` 指针实现的。
+C++23 可以向非静态成员函数显式传入对象自身，在此之前都是通过隐式传入 `this` 指针实现的．
 
 ```cpp {5-9} {23-24}
 struct A {
@@ -686,7 +686,7 @@ struct B {
 };
 ```
 
-`self` 是实打实的派生对象而不是基类指针，这意味着我们不再需要把指针类型转换到实际派生类型了。
+`self` 是实打实的派生对象而不是基类指针，这意味着我们不再需要把指针类型转换到实际派生类型了．
 
 ```cpp {"如果用 Weapon &，类 auto&& 将推导为 Weapon &，此时无 fix_impl":39-42} {"能用基类指针表示也没用，无法获得派生类型相当于残废":48-51}
 class Weapon {
@@ -745,10 +745,10 @@ int main() {
 
 ### 实现「注入实现」
 
-CRTP 的另一个作用就是复用代码的通用逻辑，实现自动化定义成员函数。
+CRTP 的另一个作用就是复用代码的通用逻辑，实现自动化定义成员函数．
 
 :::tip[案例 1]
-现有基类 `Planet` 以及派生类 `Sun`，`Earth`，对这两个派生类使用 *单例模式*。
+现有基类 `Planet` 以及派生类 `Sun`，`Earth`，对这两个派生类使用 *单例模式*．
 :::
 
 ```cpp
@@ -794,7 +794,7 @@ public:
 };
 ```
 
-我们发现这种 *单例模式* 的逻辑高度通用。
+我们发现这种 *单例模式* 的逻辑高度通用．
 
 :::warning[失败的实践]
 尝试使用协议类的形式提取这种逻辑：
@@ -841,10 +841,10 @@ int main() {
 }
 ```
 
-最大的问题就是协议类的单例模式根本没有应用在派生类上：`Sun::get_instance()` 得到的是 `Singleton` 的单一实例而非 `Sun` 的单一实例。我们提取逻辑的同时，类型信息也被抹去了。
+最大的问题就是协议类的单例模式根本没有应用在派生类上：`Sun::get_instance()` 得到的是 `Singleton` 的单一实例而非 `Sun` 的单一实例．我们提取逻辑的同时，类型信息也被抹去了．
 :::
 
-我们只是想复用「禁止拷贝，通过 `get_instance()` 获取唯一实例」这种模式，并在类 `Singleton` 统一实现这种模式，但又缺乏应用该模式的类型信息。如果实现内容**仅类型不同**，这个时候就能使用 CRTP 实现「自动化实现」：
+我们只是想复用「禁止拷贝，通过 `get_instance()` 获取唯一实例」这种模式，并在类 `Singleton` 统一实现这种模式，但又缺乏应用该模式的类型信息．如果实现内容**仅类型不同**，这个时候就能使用 CRTP 实现「自动化实现」：
 
 ```cpp ins="Singleton<Sun>" ins={"约定 T 具有的实现":6-13} ins={"Singleton<Sun>::get_instance() 需要访问 Sun() 和 ~Sun() 以管理生命周期":17-18}
 template <class T>
@@ -885,17 +885,17 @@ protected:
 ```
 
 :::note[另一种视角？]
-也许可以这样理解：CRTP 允许构建一个特别的「函数」，输入是类型、值、「函数」，输出是实现，并把输出 **注入** 到派生类里。
+也许可以这样理解：CRTP 允许构建一个特别的「函数」，输入是类型、值、「函数」，输出是实现，并把输出 **注入** 到派生类里．
 :::
 
 :::tip[案例 2]
-现有 4 个类 `Ball`、`Cube`、`Cat`、`Dog`，其中 `Ball`、`Cube` 的基类是 `Object`，`Cat`、`Dog` 的基类是 `Animal`。实现：
+现有 4 个类 `Ball`、`Cube`、`Cat`、`Dog`，其中 `Ball`、`Cube` 的基类是 `Object`，`Cat`、`Dog` 的基类是 `Animal`．实现：
 
 - `Object` 的深拷贝方法；
-- `Animal` 的深拷贝方法。
+- `Animal` 的深拷贝方法．
 :::
 
-我们的拷贝操作发生在上层模块，不知道待拷贝对象的具体类型，如果直接调用上层拷贝构造函数，会发生 *对象切片* (object-slicing)，丢失类型信息。
+我们的拷贝操作发生在上层模块，不知道待拷贝对象的具体类型，如果直接调用上层拷贝构造函数，会发生 *对象切片* (object-slicing)，丢失类型信息．
 
 假设现在有
 
@@ -936,7 +936,7 @@ ret = std::make_unique<Cat>(z);
 ret = std::make_unique<Dog>(w);
 ```
 
-虽然深拷贝成功，但显式写出了对象的具体类型，违反了开闭原则。
+虽然深拷贝成功，但显式写出了对象的具体类型，违反了开闭原则．
 
 如果愿意，可以保留虚函数接口，把实现下放：
 
@@ -1100,10 +1100,10 @@ struct Dog : AnimalImpl<Dog> { float dog_data; };
 ```
 
 :::note
-举个例子，`AnimalImpl<Cat>` 往 `Cat` 里注入了 `std::unique_ptr<Animal> clone()`，`Derived` 对应 `Cat`，减少了复读机的感觉。这个时候 CRTP 显然不是为了消除虚表开销，CRTP 并非与 `virtual` 水火不容。
+举个例子，`AnimalImpl<Cat>` 往 `Cat` 里注入了 `std::unique_ptr<Animal> clone()`，`Derived` 对应 `Cat`，减少了复读机的感觉．这个时候 CRTP 显然不是为了消除虚表开销，CRTP 并非与 `virtual` 水火不容．
 :::
 
-感觉还是有点复读机，还能再提取吗？只要想保留动态多态，通过 CRTP 注入 `clone` 实现的方式并不能 `override` 基类的 `clone`，`override` 就是无法避免的，就算再写一个 `Copyable<Base, Derived>::copy_impl` 注入，也意义不大了。
+感觉还是有点复读机，还能再提取吗？只要想保留动态多态，通过 CRTP 注入 `clone` 实现的方式并不能 `override` 基类的 `clone`，`override` 就是无法避免的，就算再写一个 `Copyable<Base, Derived>::copy_impl` 注入，也意义不大了．
 
 ## 编译期 for 循环
 
