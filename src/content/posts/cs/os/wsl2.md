@@ -9,8 +9,6 @@ category: 'OS'
 draft: false
 ---
 
-# 在 WSL 2 下使用 Arch Linux 系统
-
 :::warning
 以下内容可能过时，请注意文章最近更新时间．
 :::
@@ -461,7 +459,7 @@ appendWindowsPath=false
 
 默认的 NAT 网络模式与宿主机网络隔离，导致无法自动使用宿主机的代理
 
-```
+```text
 wsl: 检测到 localhost 代理配置，但未镜像到 WSL。NAT 模式下的 WSL 不支持 localhost 代理。
 ```
 
