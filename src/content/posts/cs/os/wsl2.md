@@ -45,7 +45,7 @@ draft: false
 > 已禁止(403)。
 > 错误代码: Wsl/UpdatePackage/0x80190193
 > ```
-> 
+>
 > 如果在检查更新时出现 “已禁止(403)”，请关闭网络代理功能。
 
 现在我成功安装了[适用于 Linux 的 Windows 子系统 2.6.3](https://github.com/microsoft/WSL/releases/tag/2.6.3)，接着检查 WSL、WSLg、Linux 内核的版本信息：
@@ -236,6 +236,12 @@ Server = http://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
 Server = https://mirrors.ustc.edu.cn/archlinux/$repo/os/$arch
 ```
 
+更换完后，建议再次同步新加的仓库
+
+```bash
+pacman -Syu
+```
+
 ### root 用户
 
 我给 `root` 用户配置默认编辑器为 `vim`：
@@ -272,8 +278,45 @@ EDITOR=vim visudo
 %wheel ALL=(ALL:ALL) ALL
 ```
 
-:::tip[`%用户组名 主机名=(目标用户名) 命令1, 命令2, !命令3`]
-> 在 `用户组名` 组中，允许 `目标用户名` 在 `主机名` 上，使用 `sudo` 后可以执行 `命令1`、`命令2`，禁止执行 `命令3`。
+:::tip
+
+> 默认管理组的命名不统一：Debian 系 (Debian、Ubuntu、Linux Mint) 是 `sudo`，而 Red Hat 系 (RHEL、CentOS、Fedora) 和传统的 Unix (如 BSD) 是 `wheel`
+>
+> 可以通过查看 `/etc/sudoers` 确认
+>
+> ```text
+> %sudo ALL=(ALL:ALL) ALL
+> %wheel ALL=(ALL:ALL) ALL
+> ```
+
+`/etc/sudoers` 的配置示例：
+
+```text
+Host_Alias office-pc = pc1, pc2, pc3, 192.168.1.11
+
+alice ALL=(ALL) NOPASSWD: /usr/bin/systemctl restart nginx
+bob ALL=(ALL) ALL, !/usr/bin/passwd, !/usr/sbin/visudo
+charlie ALL=(ALL) SETENV: /usr/bin/python3
+%dba db=(postgres) /usr/bin/psql
+%dev office-pc=(:www-data) NOEXEC: /usr/bin/vim /var/www/html/*
+
+# 仅允许用户 alice 在任何主机=(以任何身份) 免密重启 nginx
+# 允许用户 bob 在任何主机=(以任何身份) 做任何事，除了修改密码和 sudo 配置
+# 仅允许用户 charlie 在任何主机=(以任何身份) 运行 python3 (允许带上自己的环境变量)
+# 仅允许 dba 组成员 在主机 db=(以用户 postgres 的身份) 执行 sql
+# 仅允许 dev 组成员 在主机 pc1,pc2,pc3,192.168.1.11=(以 www-data 组的权限) 使用 vim (不允许使用内部的 execve 系统调用，防止 getshell 逃逸) 编辑 /var/www/html/ 里的所有文件，此时用户身份不变，但组权限生效
+```
+
+```text
+# 别名
+User_Alias      WEBADMINS = alice, bob, %devops
+Cmnd_Alias      WEB_CMDS = /usr/bin/systemctl restart nginx, /usr/bin/systemctl reload nginx
+Runas_Alias     WEBUSER = www-data
+
+# 授权部分
+WEBADMINS ALL=(WEBUSER) WEB_CMDS
+```
+
 :::
 
 #### WSL 默认启动用户
@@ -288,7 +331,13 @@ systemd=true
 default=nisemono
 ```
 
-重启终端，登录 `nisemono`。
+彻底关闭 WSL
+
+```ansi
+> [35mwsl[0m --shutdown
+```
+
+重启 WSL，登录 `nisemono`。
 
 #### yay
 
@@ -359,6 +408,72 @@ Type [32mhelp[0m for instructions on how to use fish
 | `Alt + E` | 使用 `EDITOR` 编辑命令 |
 | `Ctrl + Z` | 撤销误删操作 |
 | `Alt + /` | 重做撤销的操作 |
+
+#### Node.js
+
+退出 `fish` 回到 `bash`，安装参考 [Node.js](https://nodejs.org/zh-cn/download)
+
+```bash
+[arishimu@arishi-laptop ~]$ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+[arishimu@arishi-laptop ~]$ \. "$HOME/.nvm/nvm.sh"
+[arishimu@arishi-laptop ~]$ nvm install 24
+[arishimu@arishi-laptop ~]$ node -v
+v24.18.0
+[arishimu@arishi-laptop ~]$ which node
+/home/arishimu/.nvm/versions/node/v24.18.0/bin/node
+[arishimu@arishi-laptop ~]$ which npm
+/home/arishimu/.nvm/versions/node/v24.18.0/bin/npm
+[arishimu@arishi-laptop ~]$ corepack enable pnpm
+[arishimu@arishi-laptop ~]$ pnpm -v
+11.13.1
+[arishimu@arishi-laptop ~]$ which pnpm
+/home/arishimu/.nvm/versions/node/v24.18.0/bin/pnpm
+```
+
+:::warning
+
+如果使用 `pacman` 安装 Node.js
+
+```bash
+arishimu@arishi-laptop ~> sudo pacman -S nodejs npm
+arishimu@arishi-laptop ~> which node
+/usr/sbin/node
+arishimu@arishi-laptop ~> which npm
+/mnt/c/Program Files/nodejs/npm
+```
+
+为了避免这种尴尬的情况，我们需要禁止 Windows 的 PATH 并入 WSL
+
+```text title="/etc/wsl.conf" ins={7-8}
+[boot]
+systemd=true
+
+[user]
+default=nisemono
+
+[interop]
+appendWindowsPath=false
+```
+
+:::
+
+### 代理
+
+默认的 NAT 网络模式与宿主机网络隔离，导致无法自动使用宿主机的代理
+
+```
+wsl: 检测到 localhost 代理配置，但未镜像到 WSL。NAT 模式下的 WSL 不支持 localhost 代理。
+```
+
+为了让 WSL 与 Windows 共享网络，自动继承主机的代理配置，在 Windows 的用户文件夹创建
+
+```text title="C:\Users\ABCD\.wslconfig"
+[experimental]
+networkingMode=mirrored
+autoProxy=true
+```
+
+彻底关闭 WSL 后重启
 
 ### Niri
 
