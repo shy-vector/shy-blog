@@ -14,11 +14,17 @@ draft: false
 - 声音：空气密度的纵波。
 - 人能听到声音，是因为人耳能检测到空气密度的周期性变化。
 - **理想弦模型 (弦鸣乐器)**：两端固定、均匀柔软的轻绳，振动时无摩擦且无阻尼。拨弦时，波碰到硬边界发生反射，干涉形成驻波，且边界处必为波节 (因为存在半波损)。此时设弦长 $L$，波长 $\lambda$，则驻波能够稳定存在的必要条件是
-  $$L = n \cdot \frac{\lambda}{2} \quad (n=1,2,3,...)$$
+  $$
+  L = n \cdot \frac{\lambda}{2} \quad (n=1,2,3,...)
+  $$
   波速 $v = \sqrt{T / \mu} = \lambda f$ 恒定 (只与拉力和绳密度有关)，因此只存在以下频率
-  $$f_n = n \cdot \frac{v}{2L} = nf_1 \quad (n=1,2,3,...)$$
+  $$
+  f_n = n \cdot \frac{v}{2L} = nf_1 \quad (n=1,2,3,...)
+  $$
   其中 $f_1$ 被称作**基本频率 (第一谐波，基频，音高)**，$f_2$ 被称作第一泛音 (第二谐波)，$f_3$ 被称作第二泛音 (第三谐波)，以此类推。可见只有整数倍谐波被保留了下来，称
-  $$f_1, f_2, f_3, ... = f, 2f, 3f, ...$$
+  $$
+  f_1, f_2, f_3, ... = f, 2f, 3f, ...
+  $$
   为**谐波序列 (Harmonic Series，泛音列)**。
 
   ![overtone](./assets/overtone.png)
@@ -37,9 +43,13 @@ draft: false
   - 长笛、双簧管、萨克斯、所有铜管、巴松管。
   
   对于**闭管模型**，两端一开一闭，驻波稳定存在的必要条件变为
-  $$L = (2n-1) \cdot \frac{\lambda}{4}$$
+  $$
+  L = (2n-1) \cdot \frac{\lambda}{4}
+  $$
   只存在以下频率
-  $$f_n = (2n-1) \cdot \frac{v}{4L} = nf_1 \quad (n=1,3,5,...)$$
+  $$
+  f_n = (2n-1) \cdot \frac{v}{4L} = nf_1 \quad (n=1,3,5,...)
+  $$
   也就是说，**只有奇数倍谐波被保留下来**，这是音色空洞柔润的一种原因。
   - 单簧管、悠风号、管风琴盖管、排箫。
 
@@ -76,13 +86,14 @@ $$
 6\,\text{音分} &= (\sqrt[1200]{2})^6 = \sqrt[200]{2}
 \end{aligned}
 $$
-
 两个音符 **八度等价** $f_1 \sim f_2$，当且仅当 $f_2 / f_1$ 是 $2$ 的整数幂。
 
 > 八度在音乐中格外重要，因为人脑对八度等价有一种心理现象：两个相隔八度的音在听觉上高度相似，以至于音乐学家以相同的名字称呼它们。
 
 容易证明，音符的八度等价是等价关系 (自反，对称，传递)，其等价类又称 **音符类 (Pitch Classes)**，用不带下标的音符表示。例如在科学音高记号法中，规定 $\mathrm{A}_4 = 440 \,\mathrm{Hz}$，那么音符类
-$$\mathrm{A} = \{..., 220 \,\mathrm{Hz}, 440 \,\mathrm{Hz}, ...\} = \{440 \times 2^{k} \,\mathrm{Hz} : k \in \mathbb Z\}$$
+$$
+\mathrm{A} = \{..., 220 \,\mathrm{Hz}, 440 \,\mathrm{Hz}, ...\} = \{440 \times 2^{k} \,\mathrm{Hz} : k \in \mathbb Z\}
+$$
 其中 $\mathrm{A}_3 = 220 \,\mathrm{Hz}$，$\mathrm{A}_2 = 110 \,\mathrm{Hz}$，$\mathrm{A}_1 = 55 \,\mathrm{Hz}$，$\mathrm{A}_5 = 880 \,\mathrm{Hz}$，以此类推。
 
 > 明确音符和音符类的区别，有助于我们对后面一些概念的理解。比如和弦是由音符类定义的，而和弦的声位是指从音符类中挑选特定的音符来演奏和弦。
@@ -108,13 +119,19 @@ $$
 我们希望使用有限个音符类完成音乐创作。
 
 - **音阶 (Scale)**：满足八度封闭的音程类有限序列
-  $$\mathcal{S} = (r_1, r_2, ..., r_{N}), \quad r_k \in [1,2), \quad \prod_{k=1}^{N} r_k = 2$$
+  $$
+  \mathcal{S} = (r_1, r_2, ..., r_{N}), \quad r_k \in [1,2), \quad \prod_{k=1}^{N} r_k = 2
+  $$
 - **调式 (Mode)**：二元组 $\mathcal{M} = (\mathcal{S},k)$，$k \in \{1,2,...,N\}$
 
 语义上，若给定音符类 $p_1$，则音阶 $\mathcal{S}$ 实例化成由 $p_1$ 生成的含 $N$ 个音符类的环
-$$p_{(i \bmod{N}) + 1} = p_i \cdot r_i$$
+$$
+p_{(i \bmod{N}) + 1} = p_i \cdot r_i
+$$
 音符类 $p_i$ 在音阶中的顺序位次 $i$ 被称作 **音级 (Degree)**，用 $Ⅰ, Ⅱ, ...$ 表示。调式 $\mathcal{M}$ 中的 $k$ 表示将音符类 $p_k$ 作为该调式的 **主音 (Tonic)** ($Ⅰ$ 级)，即循环移位
-$$(p_1, p_2, ..., p_N) \mapsto (p_k, p_{k+1}, ..., p_N, p_1, ..., p_{k-1})$$
+$$
+(p_1, p_2, ..., p_N) \mapsto (p_k, p_{k+1}, ..., p_N, p_1, ..., p_{k-1})
+$$
 
 在长期的音乐实践中，各地诞生了多样的音阶和调式。
 
@@ -132,14 +149,18 @@ $$(p_1, p_2, ..., p_N) \mapsto (p_k, p_{k+1}, ..., p_N, p_1, ..., p_{k-1})$$
 > 2. 断续相接：两个四音列之间隔开一个全音
 >
 > 2 个四音列可以断续相接成**八音列**，此时里拉琴一共有八根弦，从第 1 根弦弹到第 8 根弦，形成的音程被称作 **(纯)八度 (διά πασῶν，Diapason)**
-> $$(4/3)(9/8)(4/3)=2$$
+> $$
+> (4/3)(9/8)(4/3)=2
+> $$
 > 从第 1 根弦弹到第 5 根弦，就是 **(纯)五度 (διά πέντε, Diapente, Perfect Fifth)**
-> $$(4/3)(9/8)=3/2$$
+> $$
+> (4/3)(9/8)=3/2
+> $$
 >
 > 先将 4 个自然四音列并合相接成 2 个八音列 (7*2)，再断续相接 (14)，然后加上最低的附加音，得到含 15 个音 (两个完整八度) 的 **大完整(音)系 (Systema Teleion Meizon)**，里面的每个音用弦位命名。
 >
 > | 古希腊音名 | 字面含义 | 波爱修斯 | 圭多 | 现代音名 |
-> | - |
+> | - | - | - | - | - |
 > | | | | $\Gamma$ | $\mathrm{G}_1$ |
 > | Proslambanomenos | 附加音 | $\mathrm{A}$ | $\mathrm{A}$ | $\mathrm{A}_2$ |
 > | Hypate hypaton | 最高四音列的最高弦 | $\mathrm{B}$ | $\mathrm{B}$ | $\mathrm{B}_2$ |
@@ -162,18 +183,27 @@ $$(p_1, p_2, ..., p_N) \mapsto (p_k, p_{k+1}, ..., p_N, p_1, ..., p_{k-1})$$
 > | | | | $\mathrm{ee}$ | $\mathrm{E}_5$ |
 >
 > 罗马人征服希腊后，对希腊的文化成果进行了系统性的整理和翻译。波爱修斯 (Boethius，约 480 年 — 524 年) 用古典拉丁字母为希腊的大完整音系中的 15 个音标记
-> $$\mathrm{A},\mathrm{B},\mathrm{C},\mathrm{D},\mathrm{E},\mathrm{F},\mathrm{G},\mathrm{H},\mathrm{I},\mathrm{K},\mathrm{L},\mathrm{M},\mathrm{N},\mathrm{O},\mathrm{P}$$
->
+> $$
+> \mathrm{A},\mathrm{B},\mathrm{C},\mathrm{D},\mathrm{E},\mathrm{F},\mathrm{G},\mathrm{H},\mathrm{I},\mathrm{K},\mathrm{L},\mathrm{M},\mathrm{N},\mathrm{O},\mathrm{P}
+> $$
 > 11 世纪的 **圭多 (Guido d'Arezzo，约 991–992 年 — 1033 年之后)** 认为八度等价，便把标记精简成 7 个字母：高八度使用小写字母，高十五度使用两个相同的小写字母。中世纪的圣咏经常需要唱到比 $\mathrm{A}$ 更低的音，圭多设计出比 $\mathrm{A}$ 低一个全音的 $\Gamma$，然后把
-> $$\Gamma,\mathrm{A},\mathrm{B},\mathrm{C},\mathrm{D},\mathrm{E},\mathrm{F},\mathrm{G},\mathrm{a},\mathrm{b},\mathrm{c},\mathrm{d},\mathrm{e},\mathrm{f},\mathrm{g},\mathrm{aa},\mathrm{bb},\mathrm{cc},\mathrm{dd},\mathrm{ee}$$
+> $$
+> \Gamma,\mathrm{A},\mathrm{B},\mathrm{C},\mathrm{D},\mathrm{E},\mathrm{F},\mathrm{G},\mathrm{a},\mathrm{b},\mathrm{c},\mathrm{d},\mathrm{e},\mathrm{f},\mathrm{g},\mathrm{aa},\mathrm{bb},\mathrm{cc},\mathrm{dd},\mathrm{ee}
+> $$
 > 定义为整个中世纪的音域 Gamut (音名 $\Gamma$ 和唱名 Ut)，这些音基本对应现代钢琴的白键，也被称作自然音。
 
 在八音列、大完整音系或 Gamut 中，我们发现相邻音的音程构成了
-$$\frac{9}{8},\frac{9}{8},\frac{256}{243},\frac{9}{8},\frac{9}{8},\frac{9}{8},\frac{256}{243}$$
+$$
+\frac{9}{8},\frac{9}{8},\frac{256}{243},\frac{9}{8},\frac{9}{8},\frac{9}{8},\frac{256}{243}
+$$
 的循环模式，它仅含两种音程，一大一小，并且
-$$\frac{9}{8} \approx \Big(\frac{256}{243}\Big)^2$$
+$$
+\frac{9}{8} \approx \Big(\frac{256}{243}\Big)^2
+$$
 于是我们把在八度内相邻音程形如
-$$\text{全音},\text{全音},\text{半音},\text{全音},\text{全音},\text{全音},\text{半音}$$
+$$
+\text{全音},\text{全音},\text{半音},\text{全音},\text{全音},\text{全音},\text{半音}
+$$
 的音阶为 **自然音阶 (Diatonic Scale)**。
 
 > **特别注意：并不是说全音 (Whole Tone, Whole Step) 是 $9/8$，半音 (Semitone, Half Step) 是 $256/243$，也不是说全音=半音²**。全音和半音是一种相对大小的模糊概念，没有严格的定义。只要大体满足“全全半全全全半”模式的音阶就可以称作自然音阶，这种音阶在历史上被频繁使用，相关理论的发展程度也比较高。
@@ -205,8 +235,12 @@ $$\text{全音},\text{全音},\text{半音},\text{全音},\text{全音},\text{�
    - 八度：5 全 2 半 (纯)
 
    根据音程所含的全音数和半音数，可以推出音程的代数关系，比如：
-   $$\text{纯五度}-\text{纯四度}=\text{大二度}$$
-   $$\text{纯五度}=\text{大三度}+\text{小三度}$$
+   $$
+   \text{纯五度}-\text{纯四度}=\text{大二度}
+   $$
+   $$
+   \text{纯五度}=\text{大三度}+\text{小三度}
+   $$
 
 下面是自然音阶 (**白键**) 中常见的音程，可以形成条件反射以快速反应：
 
@@ -233,11 +267,13 @@ $$\text{全音},\text{全音},\text{半音},\text{全音},\text{全音},\text{�
 > 6. (A) ***La**bii reatum*
 >
 > 得到
-> $$\mathcal{Ut}, \mathcal{Re}, \mathcal{Mi}, \mathcal{Fa}, \mathcal{Sol}, \mathcal{La}$$
+> $$
+> \mathcal{Ut}, \mathcal{Re}, \mathcal{Mi}, \mathcal{Fa}, \mathcal{Sol}, \mathcal{La}
+> $$
 > **规定 $\mathcal{Mi}$ 和 $\mathcal{Fa}$ 之间永远是半音，其他相邻唱名之间都是全音**。为了让歌唱者准确把握半音，圭多在大完整音系中选取了三种六音列供歌唱者练习：
 >
 > | 类型 | 六音列 |
-> | - |
+> | - | - |
 > | 自然六音列 | $\mathrm{C},\mathrm{D},\mathrm{E},\mathrm{F},\mathrm{G},\mathrm{a}$ |
 > | 硬六音列 | $\mathrm{G},\mathrm{a},\mathrm{b},\mathrm{c},\mathrm{d},\mathrm{e}$ |
 > | 软六音列 | $\mathrm{F},\mathrm{G},\mathrm{a},\flat,\mathrm{c},\mathrm{d}$ |
@@ -250,7 +286,7 @@ $$\text{全音},\text{全音},\text{半音},\text{全音},\text{全音},\text{�
 在 Gamut 中截取不同的八度，我们可以得到 **中古调式** (又称教会调式 Church Modes、格里高利调式 Gregorian Modes)，现代常用的 7 种中古调式按色彩排序：
 
 | 中文 | 英文 | 音阶 | 特征音 | 色彩 |
-| - |
+| - | - | - | - | - |
 | 利底亚 | Lydian | 全全全半全全半 | 大调 + ♯4 (增四度) | 缥缈，梦幻，科幻 |
 | **伊奥尼亚** | **Ionian** | **全全半全全全半** | **自然大调** | 明亮，辉煌，稳定 |
 | 混合利底亚 | Mixolydian | 全全半全全半全 | 大调 - ♭7 (小七度) | 粗犷，摇摆，蓝调 |
@@ -262,7 +298,7 @@ $$\text{全音},\text{全音},\text{半音},\text{全音},\text{全音},\text{�
 在 C 大调音阶 (C Ionian) 上按主音排序：
 
 | 名称 | 音阶 |
-| - |
+| - | - |
 | **C Ionian** | **CDEFGAB** |
 | D Dorian | DEFGABC |
 | E Phrygian | EFGABCD |
@@ -274,7 +310,7 @@ $$\text{全音},\text{全音},\text{半音},\text{全音},\text{全音},\text{�
 **在自然大调 (Ionian) 中**，各音级根据和声功能 (即调式内的稳定性和倾向性) 的命名如下：
 
 | 音级 | 功能命名 | 说明 |
-| - |
+| - | - | - |
 | **Ⅰ级** | **主音 (Tonic)** | **调式的中心音，和声的终点** |
 | Ⅱ级 | 上主音 (Supertonic) | 主音上方二度，多用于过渡或下属功能组 |
 | Ⅲ级 | **中音 (Mediant)** | 位于主音和属音的正中间，**决定大调色彩** |
@@ -288,7 +324,9 @@ $$\text{全音},\text{全音},\text{半音},\text{全音},\text{全音},\text{�
 我们希望为音阶的结构合理性提供数学解释。
 
 **律制 (Tuning System)** 是用于制定音阶里的音程关系的系统。不同的律制体现了不同的音乐美学观念，其中 **纯律 (Just Intonation)** 在数学上较为优美：音阶仅含有理数音程类
-$$\mathbb{Q}^+/\langle 2 \rangle \leq \mathbb{R}^+/\langle 2 \rangle$$
+$$
+\mathbb{Q}^+/\langle 2 \rangle \leq \mathbb{R}^+/\langle 2 \rangle
+$$
 
 > 人类的听觉能从频率比为有理数的正弦波种，识别出最小公周期模式。有理数比的分子分母越小，人脑辨识越轻松，越认为音程 **协和 (Consonant)**、悦耳。最协和的音程是 $2:1$，接着是 $3:2$，$4:3$，$5:4$，$6:5$ 等。
 >
@@ -297,71 +335,125 @@ $$\mathbb{Q}^+/\langle 2 \rangle \leq \mathbb{R}^+/\langle 2 \rangle$$
 > 这为毕达哥拉斯学派的“**万物皆数**”观念提供理论依据：整个宇宙都可以用简单的整数比例来解释。然而讽刺的是，毕达哥拉斯音差的发现将成为第一次数学危机发生的征兆。
 
 对于所有 $q \in \mathbb{Q}^+$，总存在素数分解的形式
-$$q = p_1^{\alpha_1}p_2^{\alpha_2}...p_k^{\alpha_k}, \quad \alpha_1, \alpha_2, ..., \alpha_k \in \mathbb Z$$
+$$
+q = p_1^{\alpha_1}p_2^{\alpha_2}...p_k^{\alpha_k}, \quad \alpha_1, \alpha_2, ..., \alpha_k \in \mathbb Z
+$$
 设
-$$G_p =\{p_1^{\alpha_1}p_2^{\alpha_2}...p_k^{\alpha_k} : p_1, p_2, ..., p_k \leq p\} / \langle 2 \rangle$$
+$$
+G_p =\{p_1^{\alpha_1}p_2^{\alpha_2}...p_k^{\alpha_k} : p_1, p_2, ..., p_k \leq p\} / \langle 2 \rangle
+$$
 其中 $p$ 为素数，容易证明
-$$G_p = \langle p_1, p_2, ..., p_k \rangle \leq \mathbb{Q}^+ / \langle 2 \rangle$$
+$$
+G_p = \langle p_1, p_2, ..., p_k \rangle \leq \mathbb{Q}^+ / \langle 2 \rangle
+$$
 如果纯律生成的音程都落在 $G_p$ 里，那么称该纯律为 **$p$-极限律 ($p$-Limit Tuning)**，并以此为纯律分类。比如 **毕达哥拉斯律 (Pythagorean Tuning)** 属于 3-极限律，它只使用最协和的 $3:2$ 音程生成音阶。该律制下的音程类全部落在
-$$P = \left\langle \frac{3}{2} \right\rangle \Big/ \langle 2 \rangle \leq G_3 = \langle 2, 3 \rangle / \langle 2 \rangle \leq \mathbb{Q}^+ / \langle 2 \rangle$$
+$$
+P = \left\langle \frac{3}{2} \right\rangle \Big/ \langle 2 \rangle \leq G_3 = \langle 2, 3 \rangle / \langle 2 \rangle \leq \mathbb{Q}^+ / \langle 2 \rangle
+$$
 生成音阶的算法是：从 $1$ 出发，在模八度意义下 (即始终落在 $[1, 2)$ 内) 不断乘以或除以 $3/2$，可于任意时刻终止算法。由于音程都是由纯五度 $3/2$ 不断叠加形成的，故又被称作 **五度相生律**。
 
 比如我们可以
-$$\frac{32}{27} \xleftarrow[]{\div (3/2)} \frac{16}{9} \xleftarrow[\times 2]{\div (3/2)} \frac{4}{3} \xleftarrow[\times 2]{\div (3/2)} 1 \xrightarrow[]{\times(3/2)} \frac{3}{2} \xrightarrow[\div 2]{\times(3/2)} \frac{9}{8} \xrightarrow[]{\times(3/2)} \frac{27}{16}$$
+$$
+\frac{32}{27} \xleftarrow[]{\div (3/2)} \frac{16}{9} \xleftarrow[\times 2]{\div (3/2)} \frac{4}{3} \xleftarrow[\times 2]{\div (3/2)} 1 \xrightarrow[]{\times(3/2)} \frac{3}{2} \xrightarrow[\div 2]{\times(3/2)} \frac{9}{8} \xrightarrow[]{\times(3/2)} \frac{27}{16}
+$$
 升序后得到
-$$1, \frac{9}{8}, \frac{32}{27}, \frac{4}{3}, \frac{3}{2}, \frac{27}{16}, \frac{16}{9}$$
+$$
+1, \frac{9}{8}, \frac{32}{27}, \frac{4}{3}, \frac{3}{2}, \frac{27}{16}, \frac{16}{9}
+$$
 相邻音程
-$$\frac{9}{8}, \frac{256}{243}, \frac{9}{8}, \frac{9}{8}, \frac{9}{8}, \frac{256}{243}, \frac{9}{8}$$
+$$
+\frac{9}{8}, \frac{256}{243}, \frac{9}{8}, \frac{9}{8}, \frac{9}{8}, \frac{256}{243}, \frac{9}{8}
+$$
 如果把它看成自然音阶，那么它是 Dorian 调式 (全半全全全半全)，比如 D Dorian 调式
-$$\mathrm{F} \leftarrow \mathrm{C} \leftarrow \mathrm{G} \leftarrow \mathrm{D} \rightarrow \mathrm{A} \rightarrow \mathrm{E} \rightarrow \mathrm{B}$$
-$$\mathrm{D}, \mathrm{E}, \mathrm{F}, \mathrm{G}, \mathrm{A}, \mathrm{B}, \mathrm{C}$$
+$$
+\mathrm{F} \leftarrow \mathrm{C} \leftarrow \mathrm{G} \leftarrow \mathrm{D} \rightarrow \mathrm{A} \rightarrow \mathrm{E} \rightarrow \mathrm{B}
+$$
+$$
+\mathrm{D}, \mathrm{E}, \mathrm{F}, \mathrm{G}, \mathrm{A}, \mathrm{B}, \mathrm{C}
+$$
 
 再比如 C Ionian 调式 (全全半全全全半)
-$$\frac{4}{3} \xleftarrow[\times 2]{\div (3/2)} 1 \xrightarrow[]{\times(3/2)} \frac{3}{2} \xrightarrow[\div 2]{\times(3/2)} \frac{9}{8} \xrightarrow[]{\times(3/2)} \frac{27}{16} \xrightarrow[\div 2]{\times(3/2)} \frac{81}{64} \xrightarrow[]{\times(3/2)} \frac{243}{128}$$
-$$\mathrm{F} \leftarrow \mathrm{C} \rightarrow \mathrm{G} \rightarrow \mathrm{D} \rightarrow \mathrm{A} \rightarrow \mathrm{E} \rightarrow \mathrm{B}$$
-$$\mathrm{C}, \mathrm{D}, \mathrm{E}, \mathrm{F}, \mathrm{G}, \mathrm{A}, \mathrm{B}$$
+$$
+\frac{4}{3} \xleftarrow[\times 2]{\div (3/2)} 1 \xrightarrow[]{\times(3/2)} \frac{3}{2} \xrightarrow[\div 2]{\times(3/2)} \frac{9}{8} \xrightarrow[]{\times(3/2)} \frac{27}{16} \xrightarrow[\div 2]{\times(3/2)} \frac{81}{64} \xrightarrow[]{\times(3/2)} \frac{243}{128}
+$$
+$$
+\mathrm{F} \leftarrow \mathrm{C} \rightarrow \mathrm{G} \rightarrow \mathrm{D} \rightarrow \mathrm{A} \rightarrow \mathrm{E} \rightarrow \mathrm{B}
+$$
+$$
+\mathrm{C}, \mathrm{D}, \mathrm{E}, \mathrm{F}, \mathrm{G}, \mathrm{A}, \mathrm{B}
+$$
 相邻音程
-$$\frac{9}{8}, \frac{9}{8}, \frac{256}{243}, \frac{9}{8}, \frac{9}{8}, \frac{9}{8}, \frac{256}{243}$$
-
+$$
+\frac{9}{8}, \frac{9}{8}, \frac{256}{243}, \frac{9}{8}, \frac{9}{8}, \frac{9}{8}, \frac{256}{243}
+$$
 **音乐家们非常希望这种五度相生的过程在最终形成环**。这在数学上相当于：选取合适的步数 $n$，使得存在整数 $m$ 满足
-$$\Big(\frac{3}{2}\Big)^n = 2^m$$
+$$
+\Big(\frac{3}{2}\Big)^n = 2^m
+$$
 这等价于使用有理数表示
-$$\log_{2} \frac{3}{2} = \frac{m}{n}$$
+$$
+\log_{2} \frac{3}{2} = \frac{m}{n}
+$$
 遗憾的是，这是不可能的：$\log_{2}(3/2)$ 是无理数，并且等式
-$$3^n = 2^{m+n}$$
+$$
+3^n = 2^{m+n}
+$$
 也被算术基本定理彻底否定。
 
 > 在后面我们将发现：在一架遵从五度相生律的钢琴上任意转调，需要无数个黑键。这不仅仅是数学的理论问题，而是乐器设计上实际存在的严肃问题。
 
 我们只能尝试对 $\log_{2}(3/2) \approx 0.5849625007$ 有理逼近：
-$$\frac{m}{\boldsymbol{n}} = \frac{7}{\mathbf{12}}, \frac{24}{\mathbf{41}}, ...$$
+$$
+\frac{m}{\boldsymbol{n}} = \frac{7}{\mathbf{12}}, \frac{24}{\mathbf{41}}, ...
+$$
 在 $n=12$ 时，
-$$\frac{(3/2)^{12}}{2^7} = \frac{531441}{524288} \approx 1.01364 \approx 23.46 \,\text{音分}$$
+$$
+\frac{(3/2)^{12}}{2^7} = \frac{531441}{524288} \approx 1.01364 \approx 23.46 \,\text{音分}
+$$
 被称作 **毕达哥拉斯音差 (Pythagorean Comma)**，这导致五度相生的过程是无限螺旋状的：
-$$...\mathrm{B}𝄫,\mathrm{F}\flat,\mathrm{C}\flat,\mathrm{G}\flat,\mathrm{D}\flat,\mathrm{A}\flat,\mathrm{E}\flat,\mathrm{B}\flat,\mathrm{F},\mathrm{C},\mathrm{G},\mathrm{D},\mathrm{A},\mathrm{E},\mathrm{B},\mathrm{F}\sharp,\mathrm{C}\sharp,\mathrm{G}\sharp,\mathrm{D}\sharp,\mathrm{A}\sharp,\mathrm{E}\sharp,\mathrm{B}\sharp,\mathrm{F}𝄪...$$
+$$
+...\mathrm{B}𝄫,\mathrm{F}\flat,\mathrm{C}\flat,\mathrm{G}\flat,\mathrm{D}\flat,\mathrm{A}\flat,\mathrm{E}\flat,\mathrm{B}\flat,\mathrm{F},\mathrm{C},\mathrm{G},\mathrm{D},\mathrm{A},\mathrm{E},\mathrm{B},\mathrm{F}\sharp,\mathrm{C}\sharp,\mathrm{G}\sharp,\mathrm{D}\sharp,\mathrm{A}\sharp,\mathrm{E}\sharp,\mathrm{B}\sharp,\mathrm{F}𝄪...
+$$
 
 > 为什么 $\mathrm{F},\mathrm{C},\mathrm{G},\mathrm{D},\mathrm{A},\mathrm{E},\mathrm{B}$ 后跟 $\mathrm{F}\sharp$ 呢？复习一下！首先我们正在使用自然音阶的语境，也就是**只使用字母 $\mathrm{A}$ ~ $\mathrm{G}$ 作为音名，使用全音/半音数来确定音程大小**。先推出音名 $\mathrm{B}$ + 五度 = $\mathrm{F}$，然后发现 $\mathrm{B}$ 和 $\mathrm{F}$ 实际是减五度 (2 全 2 半) 而不是纯五度 (3 全 1 半)。虽然没有 $\mathrm{B}$ + 纯五度的音，但我们可以是使用变音记号指代这个音，考虑到这个音比 $\mathrm{F}$ 稍高，记作 $\mathrm{F}\sharp$，这便是我们的黑键。
 
 而这就带来了一个问题：12 次向上或向下五度相生后得到的音与起始音十分接近，但又不能等同，形成的微小音程极不协和：
-$$\mathrm{F} \approx \mathrm{F}𝄪, \quad \mathrm{E}\flat \approx \mathrm{D}\sharp, \quad ...$$
+$$
+\mathrm{F} \approx \mathrm{F}𝄪, \quad \mathrm{E}\flat \approx \mathrm{D}\sharp, \quad ...
+$$
 因此五度相生往往在第 12 次前就停止了，通常取
-$$\mathrm{E}\flat,\mathrm{B}\flat,\mathrm{F},\mathrm{C},\mathrm{G},\mathrm{D},\mathrm{A},\mathrm{E},\mathrm{B},\mathrm{F}\sharp,\mathrm{C}\sharp,\mathrm{G}\sharp$$
+$$
+\mathrm{E}\flat,\mathrm{B}\flat,\mathrm{F},\mathrm{C},\mathrm{G},\mathrm{D},\mathrm{A},\mathrm{E},\mathrm{B},\mathrm{F}\sharp,\mathrm{C}\sharp,\mathrm{G}\sharp
+$$
 这便是钢琴上八度内的 7 个白键和 5 个黑键。
 
 > 只使用素数 $2$ 和 $3$ 作为生成元，只用纯五度 $3/2$ 生成全部音级，看似很纯粹简洁。然而一些音程由过多的纯五度叠置而成
-> $$\text{大六度} = \frac{27}{16} = \Big(\frac{3}{2}\Big)^3 \div 2$$
-> $$\text{大三度} = \frac{81}{64} = \Big(\frac{3}{2}\Big)^4 \div 4$$
-> $$\text{大七度} = \frac{243}{128} = \Big(\frac{3}{2}\Big)^5 \div 4$$
+> $$
+> \text{大六度} = \frac{27}{16} = \Big(\frac{3}{2}\Big)^3 \div 2
+> $$
+> $$
+> \text{大三度} = \frac{81}{64} = \Big(\frac{3}{2}\Big)^4 \div 4
+> $$
+> $$
+> \text{大七度} = \frac{243}{128} = \Big(\frac{3}{2}\Big)^5 \div 4
+> $$
 > 分子分母较大，听感不够协和。离它们近的协和音程(简单整数比)的音差
-> $$\frac{27}{16}\div\frac{5}{3} = \frac{81}{80} = 1.0125 \approx 21.51 \,\text{音分}$$
-> $$\frac{81}{64}\div\frac{5}{4} = \frac{81}{80} = 1.0125 \approx 21.51 \,\text{音分}$$
-> $$\frac{243}{128}\div\frac{15}{8} = \frac{81}{80} = 1.0125 \approx 21.51 \,\text{音分}$$
+> $$
+> \frac{27}{16}\div\frac{5}{3} = \frac{81}{80} = 1.0125 \approx 21.51 \,\text{音分}
+> $$
+> $$
+> \frac{81}{64}\div\frac{5}{4} = \frac{81}{80} = 1.0125 \approx 21.51 \,\text{音分}
+> $$
+> $$
+> \frac{243}{128}\div\frac{15}{8} = \frac{81}{80} = 1.0125 \approx 21.51 \,\text{音分}
+> $$
 > 被称作 **谐音差 (Syntonic Comma)**，一定程度上代表不协和的程度。
 
 听觉对简单整数比的偏好，促使音乐家们把素数 $5$ 也纳入生成元。一些音程就能够使用含 $5$ 因子的分子分母，可以用更短的路径构造自然大调音阶的七个音级。比如让 $5/4$ 作为大三度，然后使用纯五度和大三度生成 **纯律自然大调音阶 (Just Ionian)**
-$$J_I = \left\langle \frac{3}{2},\frac{5}{4} \right\rangle \Big/ \langle 2 \rangle \leq G_5 = \langle 2,3,5 \rangle / \langle 2 \rangle$$
+$$
+J_I = \left\langle \frac{3}{2},\frac{5}{4} \right\rangle \Big/ \langle 2 \rangle \leq G_5 = \langle 2,3,5 \rangle / \langle 2 \rangle
+$$
 典型的生成路径是：
-
 $$
 \begin{aligned}
 Ⅰ &= 1 \\
@@ -373,21 +465,30 @@ $$
 Ⅶ &= Ⅴ+\text{大三度} \\
 \end{aligned}
 $$
-
 得到
-$$1,\frac{9}{8},\frac{5}{4},\frac{4}{3},\frac{3}{2},\frac{5}{3},\frac{15}{8}$$
+$$
+1,\frac{9}{8},\frac{5}{4},\frac{4}{3},\frac{3}{2},\frac{5}{3},\frac{15}{8}
+$$
 相邻音程
-$$\frac{9}{8},\frac{10}{9},\frac{16}{15},\frac{9}{8},\frac{10}{9},\frac{9}{8},\frac{16}{15}$$
+$$
+\frac{9}{8},\frac{10}{9},\frac{16}{15},\frac{9}{8},\frac{10}{9},\frac{9}{8},\frac{16}{15}
+$$
 音阶仍然遵循“全全半全全全半”的模糊模式，出现了**大全音 (Major Tone)** $9/8$ 与 **小全音 (Minor Tone)** $10/9$，而 $16/15$ 被称作 **大半音 (Major Semitone)**。大小全音之比
-$$\frac{9}{8} \div \frac{10}{9} = \frac{81}{80} \approx 21.5 \,\text{音分}$$
+$$
+\frac{9}{8} \div \frac{10}{9} = \frac{81}{80} \approx 21.5 \,\text{音分}
+$$
 被称作 **普通音差 (Syntonic Comma)**。
 
 > 在纯律大调音阶中，主音上的三度、六度极纯，但强扭的瓜不甜：这种局部协和是以其他地方的五度瑕疵为代价的。比如从 Ⅱ 到 Ⅵ 的纯五度
-> $$\frac{5}{3} \div \frac{9}{8} = \frac{40}{27} \ne \frac{3}{2}$$
+> $$
+> \frac{5}{3} \div \frac{9}{8} = \frac{40}{27} \ne \frac{3}{2}
+> $$
 > 该五度比纯五度窄一个普通音差 (约 $21.5$ 音分)，听感明显抖动，被称为 **狼音程 (Wolf Interval)**。纯律因此很难自由转调——每次转到不同主音，音阶内部的比例都需要重新调整，否则就会出现刺耳的音程。
 
 我们也可以让 $6/5$ 作为小三度，使用纯五度和小三度生成 **纯律自然小调音阶 (Just Aeolian)**
-$$J_A = \left\langle \frac{3}{2},\frac{6}{5} \right\rangle \Big/ \langle 2 \rangle \leq G_5 = \langle 2,3,5 \rangle / \langle 2 \rangle$$
+$$
+J_A = \left\langle \frac{3}{2},\frac{6}{5} \right\rangle \Big/ \langle 2 \rangle \leq G_5 = \langle 2,3,5 \rangle / \langle 2 \rangle
+$$
 典型的生成路径：
 $$
 \begin{aligned}
@@ -401,22 +502,38 @@ $$
 \end{aligned}
 $$
 得到
-$$1,\frac{9}{8},\frac{6}{5},\frac{4}{3},\frac{3}{2},\frac{8}{5},\frac{9}{5}$$
+$$
+1,\frac{9}{8},\frac{6}{5},\frac{4}{3},\frac{3}{2},\frac{8}{5},\frac{9}{5}
+$$
 相邻音程
-$$\frac{9}{8},\frac{16}{15},\frac{10}{9},\frac{9}{8},\frac{16}{15},\frac{9}{8},\frac{10}{9}$$
+$$
+\frac{9}{8},\frac{16}{15},\frac{10}{9},\frac{9}{8},\frac{16}{15},\frac{9}{8},\frac{10}{9}
+$$
 
 ## 平均律
 
 全音的大小之分直接导致了狼音程的产生，根本原因在于多个生成元同时存在。**中庸全音律 (Meantone Temperament)** 向平均律作出第一次妥协：企图沿用五度相生，在统一全音的同时，把纯五度 $3/2$ 修改成 $\tau$，使得大三度成为纯律大三度
-$$\tau^4=\frac{5}{4}$$
+$$
+\tau^4=\frac{5}{4}
+$$
 模八度意义下
-$$\tau = \sqrt[4]{5} \approx 1.49535 \approx 696.578 \,\text{音分}$$
-$$3/2 \approx 701.9550\,\text{音分}$$
+$$
+\tau = \sqrt[4]{5} \approx 1.49535 \approx 696.578 \,\text{音分}
+$$
+$$
+3/2 \approx 701.9550\,\text{音分}
+$$
 比纯五度大约窄了 $1/4$ 普通音差，因此也得名 **四分之一音差中庸全音律 (1/4-comma Meantone)**
-$$M = \langle \tau \rangle / \langle 2 \rangle \leq \mathbb{R}^+/\langle 2 \rangle$$
+$$
+M = \langle \tau \rangle / \langle 2 \rangle \leq \mathbb{R}^+/\langle 2 \rangle
+$$
 这时再进行五度相生 (以自然大调为例)：
-$$\frac{2}{\tau} \xleftarrow[\times 2]{\div \tau} 1 \xrightarrow[]{\times\tau} \tau \xrightarrow[\div 2]{\times\tau} \frac{\tau^2}{2} \xrightarrow[]{\times\tau} \frac{\tau^3}{2} \xrightarrow[\div 2]{\times\tau} \frac{5}{4} \xrightarrow[]{\times\tau} \frac{5\tau}{4}$$
-$$Ⅳ \leftarrow Ⅰ \rightarrow Ⅴ \rightarrow Ⅱ \rightarrow Ⅵ \rightarrow Ⅲ \rightarrow Ⅶ$$
+$$
+\frac{2}{\tau} \xleftarrow[\times 2]{\div \tau} 1 \xrightarrow[]{\times\tau} \tau \xrightarrow[\div 2]{\times\tau} \frac{\tau^2}{2} \xrightarrow[]{\times\tau} \frac{\tau^3}{2} \xrightarrow[\div 2]{\times\tau} \frac{5}{4} \xrightarrow[]{\times\tau} \frac{5\tau}{4}
+$$
+$$
+Ⅳ \leftarrow Ⅰ \rightarrow Ⅴ \rightarrow Ⅱ \rightarrow Ⅵ \rightarrow Ⅲ \rightarrow Ⅶ
+$$
 相邻音程满足“全全半全全全半”的模式，全音处在大小全音之间，故得名中庸。并且相比毕达哥拉斯律中的大三度，中庸全音律的纯五度的谐音差较小，听觉可以接受。收益是纯净的大三度。
 
 > 从 16 世纪到 18 世纪，中庸全音律是欧洲键盘乐器 (管风琴、羽管键琴) 的主流调律法。
